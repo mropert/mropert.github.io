@@ -3,7 +3,7 @@ layout: list
 title: Events
 slug: events
 menu: true
-order: 22
+order: 2
 description: >
   Meetups and conferences I organize or attend to. Trip reports.
 
