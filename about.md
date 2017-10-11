@@ -16,6 +16,6 @@ I'm also a contributor to the [Conan C++ Package Manager](https://www.conan.io/)
 
 ## Contact
 
-You can contact me by email: [mailto:mro@puchiko.net].
+You can contact me by email: [mro@puchiko.net](mailto:mro@puchiko.net).
 
 I'm also on Twitter: [@MatRopert](https://twitter.com/MatRopert).
