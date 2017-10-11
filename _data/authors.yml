@@ -8,19 +8,26 @@ mropert:
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    My name is Mathieu, I'm 33 and I write C++ for a living.
 
-    Open `_data/authors.yml` to edit this text.
+    I was born (and currently reside) in France so of course I'm a pedantic snob who likes wine and pastries.
+
+    Clichés aside, I enjoy coding, automating stuff, photography, cinema, role-playing games (both pen & paper and live action) and video games.
+    And also wine (but not only the french ones).
+
+    I've worked in various areas, ranging from kernel programming to web development and databases.
+    My current favorite subject is package management, which I think the lack of has been holding back C++ for years now.
+
+    You should easily be able meet me at the [C++ French User Group (CppFRUG)](http://cppfrug.org/) meetups which I co-organize in Paris,
+    but also at [CppCon](https://cppcon.org/) and [Meeting C++](http://meetingcpp.com/).
 
   # This photo will be used in the about section
   picture:
-    src:             https://placehold.it/128x128
+    src:             https://avatars2.githubusercontent.com/u/101672
     # srcset is optional, but can be used to provide higher res versions for retina displays
-    srcset:
-      1x:            https://placehold.it/128x128
-      2x:            https://placehold.it/256x256
+    #srcset:
+    #  1x:            https://placehold.it/128x128
+    #  2x:            https://placehold.it/256x256
 
   # Social media icons in sidebar
   # Comment/uncommet to show/hide
