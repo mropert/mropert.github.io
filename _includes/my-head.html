@@ -11,3 +11,9 @@ Fill in `href`. You may have to adjust `rel`.
 -->
 <noscript><link href="<path/to/content.css>" rel="stylesheet"></noscript>
 {% endcomment %}
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="{% site.twitter_username %}" />
+<meta name="twitter:title" content="{% title %}" />
+<meta name="twitter:description" content="{% description | strip_html | truncatewords:50 %}" />
+<meta name="twitter:image" content="{% include.author.picture %}" />
