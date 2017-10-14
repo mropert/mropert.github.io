@@ -21,7 +21,7 @@ When I started using CMake for a big project at work, I was a bit disappointed b
 Granted the [CMake documentation](https://cmake.org/cmake/help/v3.10/) is not nearly as bad as people make it, but I'll admit
 it's not really friendly looking either.
 
-The best I could find at the time was Rix0r's blog post: https://rix0r.nl/blog/2015/08/13/cmake-guide/.
+The best I could find at the time was Rix0r's blog post: <https://rix0r.nl/blog/2015/08/13/cmake-guide/>.
 
 Since C++Now this year, you can also see [Daniel Pfeifer's Effective CMake](https://www.youtube.com/watch?v=bsXLMQ6WgIk), which gives
 a very good overview of what CMake can do today.
