@@ -1,7 +1,7 @@
 ---
 layout: post
 title: My CppCon 2017 talk about Modular Design with CMake is online!
-tags: [cpp, events]
+tags: [build, cpp, events]
 description: >
   Do you think about your libraries in CMake in term of compiler flags or architecture modules? In this talk, I show you how to do
   the latter.
