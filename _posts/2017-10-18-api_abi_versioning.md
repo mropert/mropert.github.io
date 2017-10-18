@@ -8,8 +8,8 @@ description: >
 author: mropert
 ---
 
-As I said in my [trip report](/2017/10/12/cppcon2017\/), I had two talks at CppCon this year.
-The first one was about [using CMake for Modular Design](/2017/10/14/modern_cmake_video\/).
+As I said in my [trip report](/2017/10/12/cppcon2017/), I had two talks at CppCon this year.
+The first one was about [using CMake for Modular Design](/2017/10/14/modern_cmake_video/).
 The second one is about changes in your library will impact your clients through API & ABI and how to tell them about it through
 versioning:
 
