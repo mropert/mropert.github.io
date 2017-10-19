@@ -78,6 +78,8 @@ To me, the best (and maybe only) way to solve DRY would be design and implement 
 could use to integrate with build systems. Here's a schematic overview of how it could work, using the package manager
 as the top level orchestrator of any build:
 
+![Common build interface](/assets/img/post/package_manager_interface.png)
+
 1. Environment check.
   The package manager gives the build system all the information about the environment: which compiler to use, which standard
   and ABI flags are in use, the build type (debug/release) and the target architecture.
