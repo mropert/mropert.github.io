@@ -19,7 +19,7 @@ access the web, decode files, handle cryptography or store data. And I'm not eve
 
 Most languages have solved that problem with a package manager that comes with the language. Python has `pip`, JS has `npm`,
 Rust has `cargo`, Ruby has `gem`. Heck, even Perl has had `cpan` for decades. What does C++ have? A couple of projects,
-some with interesting promises, still nothing comparable.
+some with interesting promises, but still nothing comparable.
 
 This is a serious issue. Lack of productivity in C++ is one of the most common arguments I hear against C++, and the efforts needed
 to use 3rd party software (or even another library you wrote, really) is, in my opinion, one of the main reasons why.
@@ -42,10 +42,11 @@ manager is supposed to handle that. So again, you violate DRY by putting the lis
 once in the build files and once in the package manager.
 
 And then, what happens when you want to publish your library as a package? You have to tell the package manager what kind of
-flags to propagate to users. If you want to avoid breaking DRY again, you use `pkg-config` and provide a `.pc` that's generated
+flags to propagate to users (include dirs, defines, lib flags...).
+If you want to avoid breaking DRY again, you use `pkg-config` and provide a `.pc` that's generated
 from your build files and that your package manager can use. Except very few libraries do that. I've looked at a good sample
 of Conan package scripts and almost all of them describe the build interface of the package again because it has no way to
-extract them from the build system.
+extract it from the build system.
 
 ### False promises
 
@@ -58,7 +59,7 @@ require every project to rewrite its build files. This would take time. Transiti
 portion of them has been migrated, the situation would not improve for day to day C++ dev.
 
 I'm not saying we're doomed to write CMakeLists.txt for the rest of our lives, but any serious solution would have to offer
-some degree of compatiblity with existing code so that we could get results quick. If you put rewriting the full build of
+some degree of compatibility with existing code so that we could get results quick. If you put rewriting the full build of
 Boost (or any similar popular library) to a new and almost unused (yet) build system on the critical path, you're not going
 to make any progress.
 
@@ -68,44 +69,44 @@ To recap, a package management solution should offer the following:
 
 1. Follow DRY. No duplication of information should occur between the build system and the package manager.
 2. Compatibility with existing build systems. It should be able to integrate with CMake, Boost.Build, Meson, ...
-3. Ensure packages are compatible with each other and follow whatever build profile was defined by the user at top level.
+3. Ensure packages are compatible with each other and follow whatever build profile (compiler, standard, target machine...) was defined by the user at top level.
 4. Prefer config files to scripting. If scripting must be done, do not write a new language, and *seriously* consider using C++.
   Developers (especially newbies) should not be asked to learn another programming language to be able to do C++.
 
 #### Common build interface
 
-To me, the best (and maybe only) way to solve DRY would be design and implement a common build interface that package managers
-could use to integrate with build systems. Here's a schematic overview of how it could work, using the package manager
-as the top level orchestrator of any build:
+To me, the best (and maybe only) way to solve DRY (and some other issues) would be to design and implement a common build interface
+that package managers could use to integrate with build systems.
+Here's a schematic overview of how it could work, using the package manager as the top level orchestrator of any build:
 
 ![Common build interface](/assets/img/posts/package_manager_interface.png)
 
-1. Environment check.
+1. Environment check  
   The package manager gives the build system all the information about the environment: which compiler to use, which standard
   and ABI flags are in use, the build type (debug/release) and the target architecture.
   The build system is expected to check if it can work with that. It should *not* try to work around the build flags to raise the
-  standard version or anything else to satisfy a build requirement from the project. Either it can work with it, or it fails the environment
-  check.
-2. Dependency listing
+  standard version or anything else to satisfy a build requirement from the project. Either it can work with it, or it fails the
+  environment check.
+2. Dependency listing  
   Once the environment check is passed, the build system should return the list of dependencies required (with the acceptable versions)
   for that build. How it obtains that list is its responsibility and the package manager should not interfere.
   Today it could be written in the build files but tomorrow it could be queried from source with some kind of `/showImports` toggle
   to the  compiler.
   Each dependency should be explicitely declared as public or private.
-3. Dependency resolution
+3. Dependency resolution  
   The package manager can then query its storage (local or remote) to check if all the required dependencies are available
   for the current environment settings.
   If some packages are missing, it could either build them (by recursively running this whole procedure) or fail depending on user input.
   Of course, if no recipe is available (or if a version conflict is detected), it should fail too.
-4. Build
+4. Build  
   Once all dependencies are installed, the package manager should call the build system again to build the module. It should provide
   the build interface of each dependency (collection of include/link/define flags).
-5. Install
+5. Install  
   If the built module is supposed to be installed (either because it's being built as a dependency for another one or because the user
   explicitely asked for it), the build system should install it at a location provided by the package manager.
   It should also provide the build interface of the module to the package manager so that it can be reused by another.
 
-This procedure robs the existing build systems of some of their role today. Some of them like to try to find or even install
+This procedure robs the existing build systems of some of their roles today. Some of them like to try to find or even install
 dependencies, others try to set/overwrite build flags to satisfy some requirements. For a proper separation of concerns,
 that should be disabled when working with a package manager to ensure a consistent build across packages.
   
@@ -123,7 +124,7 @@ tied to an older system.
 So far, we've seen a potential solution to address the first three issues: uphold DRY, offer compatibility with existing libraries
 and ensure the results are ABI compatible by taking control of the build flags.
 
-One last remain and possibly the most controversial: do not use a language other than C++ to describe how to a package a C++ project.
+One last remain and possibly the most controversial: not using a language other than C++ to describe how to a package a C++ project.
 Since most of the custom scripting would be removed by using a common build interface, I think that question is best left unanswered
 for now. But don't despair, it will come back in the next post when we discuss how to improve the build systems themselves.
 Stay tuned!
