@@ -124,7 +124,7 @@ tied to an older system.
 So far, we've seen a potential solution to address the first three issues: uphold DRY, offer compatibility with existing libraries
 and ensure the results are ABI compatible by taking control of the build flags.
 
-One last remain and possibly the most controversial: not using a language other than C++ to describe how to a package a C++ project.
+One last item remains (and possibly the most controversial): not using a language other than C++ to describe how to a package a C++ project.
 Since most of the custom scripting would be removed by using a common build interface, I think that question is best left unanswered
 for now. But don't despair, it will come back in the next post when we discuss how to improve the build systems themselves.
 Stay tuned!
