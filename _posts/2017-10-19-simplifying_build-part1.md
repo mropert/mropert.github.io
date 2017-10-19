@@ -129,3 +129,5 @@ Since most of the custom scripting would be removed by using a common build inte
 for now. But don't despair, it will come back in the next post when we discuss how to improve the build systems themselves.
 Stay tuned!
 
+PS: Of course this is just an idea, maybe an embryo of a proposal. Feel free to send any comment, objection, suggestion or encouragement
+by email, Twitter or on CppChat.
