@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Following-up on "simplifying build in C++ (part 1)" and  discussing API convergence
+title: Following-up on 'simplifying build in C++ (part 1)' and  discussing API convergence
 tags: [build, cpp]
 description: >
   My previous post about simplifying build in C++ gathered some reaction but I feel that a significant part of them seemed
