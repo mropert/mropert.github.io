@@ -98,3 +98,5 @@ this is the way to go.
 
 So don't be shy. On the contrary, be curious. Tear² the thing you're using the most down and see
 how it works behinds the scene. It'll help you one day or another, trust me.
+
+<sup>1</sup> For my youngest readers, a floppy disk is a giant 3D print of a save button.
