@@ -93,7 +93,7 @@ should always have at least a minimal knowledge of the abstractions he uses. Thi
 your CPU works, how your network protocols work, how your kernel works and so on and so forth.
 
 I've seen [talks about Javascript that stop midway to explain how x86 protected mode work](https://www.destroyallsoftware.com/talks/the-birth-and-death-of-javascript),
-I've worked with financial application engineers that worked on wifi routers on weekends and I'm pretty convinced
+I've worked with financial application engineers that patched wifi routers firmwares on weekends and I'm pretty convinced
 this is the way to go.
 
 So don't be shy. On the contrary, be curious. Tear² the thing you're using the most down and see
