@@ -190,7 +190,7 @@ approved (that&#39;s what liking on Twitter means, right?).
 <a href="https://twitter.com/MatRopert/status/936362895000076288?ref_src=twsrc%5Etfw">November 30, 2017</a>
 </blockquote>
 
-So next time you see inheritance and `virtual` to achieve runtime polymorphism, think TEPS!
+So next time you see inheritance and `virtual` to achieve runtime polymorphism, think TEPS! (Thanks to Simon Brand for the idea :))
 
 You can find the full final source here: https://godbolt.org/g/iXr1Xj
 
