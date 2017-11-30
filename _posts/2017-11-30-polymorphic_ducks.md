@@ -192,7 +192,7 @@ approved (that&#39;s what liking on Twitter means, right?).
 
 So next time you see inheritance and `virtual` to achieve runtime polymorphism, think TEPS! (Thanks to Simon Brand for the idea :))
 
-You can find the full final source here: https://godbolt.org/g/iXr1Xj
+You can find the full final source here: [https://godbolt.org/g/iXr1Xj](https://godbolt.org/g/iXr1Xj).
 
 
 <sup>1</sup> The traditional solution around this is the [Visitor](https://en.wikipedia.org/wiki/Visitor_pattern), which comes
