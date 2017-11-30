@@ -97,7 +97,10 @@ public:
   drawable(T&& impl) : m_impl(new model_t<T>(std::forward<T>(impl))) {}
 
   template <typename T>
-  drawable& operator=(T&& impl) { m_impl.reset(new model_t<T>(std::forward<T>(impl))); return *this; }
+  drawable& operator=(T&& impl) {
+    m_impl.reset(new model_t<T>(std::forward<T>(impl)));
+    return *this;
+  }
    
   void draw() const { m_impl->draw(); }
    
@@ -144,7 +147,10 @@ public:
   drawable(T&& impl) : m_impl(new model_t<T>(std::forward<T>(impl))) {}
 
   template <typename T>
-  drawable& operator=(T&& impl) { m_impl.reset(new model_t<T>(std::forward<T>(impl))); return *this; }
+  drawable& operator=(T&& impl) {
+    m_impl.reset(new model_t<T>(std::forward<T>(impl)));
+    return *this;
+  }
   
   friend void draw(const drawable& d) { d.m_impl->do_draw(); }
 
