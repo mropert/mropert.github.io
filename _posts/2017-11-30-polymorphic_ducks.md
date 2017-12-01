@@ -93,17 +93,24 @@ class drawable {
 public:
   drawable() = default;
 
+  drawable(const drawable&) = delete;
+  drawable(drawable&&) = default;
+
   template <typename T>
-  drawable(T&& impl) : m_impl(new model_t<T>(std::forward<T>(impl))) {}
+  drawable(T&& impl)
+    : m_impl(new model_t<std::remove_reference_t<T>>(std::forward<T>(impl))) {}
+
+  drawable& operator=(const drawable&) = delete;
+  drawable& operator=(drawable&&) = default;
 
   template <typename T>
   drawable& operator=(T&& impl) {
     m_impl.reset(new model_t<T>(std::forward<T>(impl)));
     return *this;
   }
-   
+
   void draw() const { m_impl->draw(); }
-   
+
 private:
   std::unique_ptr<concept_t> m_impl;
 };
@@ -143,8 +150,15 @@ class drawable {
 public:
   drawable() = default;
 
+  drawable(const drawable&) = delete;
+  drawable(drawable&&) = default;
+
   template <typename T>
-  drawable(T&& impl) : m_impl(new model_t<T>(std::forward<T>(impl))) {}
+  drawable(T&& impl)
+    : m_impl(new model_t<std::remove_reference_t<T>>(std::forward<T>(impl))) {}
+
+  drawable& operator=(const drawable&) = delete;
+  drawable& operator=(drawable&&) = default;
 
   template <typename T>
   drawable& operator=(T&& impl) {
@@ -192,7 +206,7 @@ approved (that&#39;s what liking on Twitter means, right?).
 
 So next time you see inheritance and `virtual` to achieve runtime polymorphism, think TEPS! (Thanks to Simon Brand for the idea :))
 
-You can find the full final source here: [https://godbolt.org/g/iXr1Xj](https://godbolt.org/g/iXr1Xj).
+You can find the full final source here: [https://godbolt.org/g/wyYQrb](https://godbolt.org/g/wyYQrb).
 <br>
 
 <sup>1</sup> The traditional solution around this is the [Visitor](https://en.wikipedia.org/wiki/Visitor_pattern), which comes
@@ -201,3 +215,5 @@ at the cost of more virtual dispatch and more inheritance.
 <sup>2</sup> In Louis' defense, he actually shown Sean's technique in his original talk but decided to cut it for CppCon
 following some feedback he got in previous sessions (viewers found it too complex to follow).
 I'm still puzzled by this because I find it so simple and elegant, different strokes I guess...
+
+Edit: fixed construction by const ref in the code.
