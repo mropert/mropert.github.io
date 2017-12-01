@@ -98,7 +98,7 @@ public:
 
   template <typename T>
   drawable(T&& impl)
-    : m_impl(new model_t<std::remove_reference_t<T>>(std::forward<T>(impl))) {}
+    : m_impl(new model_t<std::decay_t<T>>(std::forward<T>(impl))) {}
 
   drawable& operator=(const drawable&) = delete;
   drawable& operator=(drawable&&) = default;
@@ -206,7 +206,7 @@ approved (that&#39;s what liking on Twitter means, right?).
 
 So next time you see inheritance and `virtual` to achieve runtime polymorphism, think TEPS! (Thanks to Simon Brand for the idea :))
 
-You can find the full final source here: [https://godbolt.org/g/wyYQrb](https://godbolt.org/g/wyYQrb).
+You can find the full final source here: [https://godbolt.org/g/dCnVKB](https://godbolt.org/g/dCnVKB).
 <br>
 
 <sup>1</sup> The traditional solution around this is the [Visitor](https://en.wikipedia.org/wiki/Visitor_pattern), which comes
