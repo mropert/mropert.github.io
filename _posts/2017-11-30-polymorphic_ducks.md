@@ -105,7 +105,7 @@ public:
 
   template <typename T>
   drawable& operator=(T&& impl) {
-    m_impl.reset(new model_t<T>(std::forward<T>(impl)));
+    m_impl.reset(new model_t<std::decay_t<T>>(std::forward<T>(impl)));
     return *this;
   }
 
@@ -162,7 +162,7 @@ public:
 
   template <typename T>
   drawable& operator=(T&& impl) {
-    m_impl.reset(new model_t<T>(std::forward<T>(impl)));
+    m_impl.reset(new model_t<std::decay_t<T>>(std::forward<T>(impl)));
     return *this;
   }
   
@@ -206,7 +206,7 @@ approved (that&#39;s what liking on Twitter means, right?).
 
 So next time you see inheritance and `virtual` to achieve runtime polymorphism, think TEPS! (Thanks to Simon Brand for the idea :))
 
-You can find the full final source here: [https://godbolt.org/g/dCnVKB](https://godbolt.org/g/dCnVKB).
+You can find the full final source here: [https://godbolt.org/g/9PZALq](https://godbolt.org/g/9PZALq).
 <br>
 
 <sup>1</sup> The traditional solution around this is the [Visitor](https://en.wikipedia.org/wiki/Visitor_pattern), which comes
