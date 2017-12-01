@@ -155,7 +155,7 @@ public:
 
   template <typename T>
   drawable(T&& impl)
-    : m_impl(new model_t<std::remove_reference_t<T>>(std::forward<T>(impl))) {}
+    : m_impl(new model_t<std::decay_t<T>>(std::forward<T>(impl))) {}
 
   drawable& operator=(const drawable&) = delete;
   drawable& operator=(drawable&&) = default;
