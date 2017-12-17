@@ -25,7 +25,7 @@ class Goose { /* ... */ };
 void walk(const Goose& g);
 void quack(const Goose& g);
 
-std::vector<duck_t> bar(); // Might return a mix Swans, Geese, or even actual Ducks!
+std::vector<duck_t> bar(); // Might return a mix of Swans, Geese, or even actual Ducks!
 
 void foo() {
   for (const auto& duck : bar()) {
@@ -113,8 +113,8 @@ This could be inefficient for a couple reasons:
 * Putting all our Ducks in an array-like container will not guarantee the actual data ends up in the same memory region,
   decreasing locality of reference.
 
-Let's try to replace the `unique_ptr` by a static buffer. Since we'll be changing a lot
-of lines I'll show the complete source this time:
+Let's try to replace the `unique_ptr` by a static buffer. To do that we will use a `std::aligned_storage` of a given size (say, 64 bytes
+for example) and do placement `new` and `delete`. Since we'll be changing a lot of lines I'll show the complete source this time:
 
 ```cpp
 class duck_t {
