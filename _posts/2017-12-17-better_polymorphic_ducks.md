@@ -278,3 +278,10 @@ And have the compiler generate all we need to wrap any object that satisfies the
 I will leave you to that final thought, don't hesitate to tell me what you think about it.
 
 As always, you can find the final code is here: [https://godbolt.org/g/kFp23k](https://godbolt.org/g/kFp23k).
+
+## Follow-up
+
+My readers pointed out two things that were not entirely correct in this article. First was a problem with strict aliasing,
+and the second was an update to Metaclasses that I missed.
+
+I've kept the original as it was but wrote a [quick follow-up that you should read](/2017/12/23/undefined_ducks/).
