@@ -175,6 +175,6 @@ to talk to build systems. And for that, we need a common language to describe th
 
 On one hand, it's a bit scary that in 2018 we don't have one already. On the other, we see that solving this issue will
 also benefit existing build systems by providing a tool to externalize compiler invocation and focus better on what we
-expect for a modern build system (proper handling of dependencies, compilation graphs and incremental recompilation).
+expect from a modern build system (proper handling of dependencies, compilation graphs and incremental recompilation).
 
 And wouldn't it be nice to stop pretending we [do header-only libraries with 0 dependencies because it's trendy](https://youtu.be/XWRbbTVcZwQ)?
