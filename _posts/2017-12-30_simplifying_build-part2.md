@@ -10,7 +10,7 @@ description: >
 author: mropert
 ---
 
-Christmas and New Year Eve are that particular parts of the year when we wish for impossible things and make unreasonable promises.
+Christmas and New Year Eve are that particular part of the year when we wish for impossible things and make unreasonable promises.
 Get a bottle of a 1999 DRC La Tâche, lose weight, have a C++ ecosystem with a built-in package manager...
 
 Since we computer scientists like challenge, let's take a moment to work on the hardest of those. In the 
@@ -27,14 +27,14 @@ what options. It's usually not longer than half a dozen lines, but each has trem
 which machine will be able to run the resulting binaries, how fast it may perform, if it will be possible to debug it or not
 and what other binaries it may be compatible with.
 
-As odd as it may appear, defining a toolchain is not mandatory on all build systems (or package managers). For example
+As odd as it may appear, defining a toolchain is not mandatory on most build systems (or package managers). For example
 if you lookup [CMake's documentation](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html), it will describe
 it as something mostly reserved for cross-compiling. At first it may seem reasonable, CMake is perfectly capable of detecting
 whatever machine and compiler you have and make the decision for you. But the second you start sharing your code with someone
 else, or distribute binaries, the whole "on my machine, it works" falls apart. You need to define a common baseline.
 
 In essence, a toolchain configuration is used to describe two things:
-* What the code requires to compile (host requirements)
+* What the code requires to compile (toolchain requirements)
 * What machine will be needed to run the produced binaries (target requirements)
 
 The distinction between the two may seem obvious if you've worked on cross-compiled projects, but I've met a lot people who
@@ -60,15 +60,13 @@ os: Windows
 ```
 
 Here we declare that we're building for 64 bits x86 hardware, in Release mode, with Visual C++ 2017 using the shared runtime.
-As you can see the distinction between host and target requirement isn't explicitly stated. This is quite common with build systems.
+As you can see the distinction between toolchain and target requirement isn't explicitly stated. This is quite common with build systems.
 Let's walk over each one:
 
-* `arch` is a target requirement. It may seem surprising but what we want here is to build for `x86_64` machines and that's all.
-  The host machine could very well be of another kind of CPU.
-  Of course in some cases that would be a requirement for both, we'll come back to that later.
+* `arch` is a target requirement. It is not mandatory that the host machine fits the bill.
 * `build_type` is a bit special because it's more of a directive than a requirement, as I don't know of any system where building
   with or without optimizing and with or without debug symbols affects compatibility.
-* `compiler` and `compiler.version` are host requirements, here we need Visual Studio 2017 to compile.
+* `compiler` and `compiler.version` are toolchain requirements, here we need Visual Studio 2017 to compile.
 * `compiler.runtime` is a target requirement, we will build binaries that link to MSVC's dynamic runtime. The version of the
   runtime is a hidden target requirement here, derived from `compiler.version`. Technically we build for version 14 (the one associated
   with VC++ 2017) and won't be compatible with older releases.
@@ -81,19 +79,19 @@ we didn't say *which* version of the C++ standard we wanted. Should the build sy
 Should it let the compiler use its default? Do we know which threading or exception model will be used? Should we care?
 
 The good news is, we (the toolchain config maintainers) don't always have to care. It's enough for a start to define the
-minimum requirements that suit our needs and change the defaults only if a specific reason arises.
+minimum requirements that suit our needs and add the rest only if a specific reason arises.
 
-The bad news is, things are not simple as this, because most of the build systems out there won't cooperate as we expect.
+The bad news is, things are not simple as this, because most build systems out there won't cooperate as we expect.
 Namely, two problems are likely to appear: toolchain configuration override and inability to use it as is. Let me explain.
 
 ### Read-only configuration?
 
 Here's the thing: most build systems try to be smarter than they should. Given a toolchain which defaults to C++03 and
 a project that requires C++14, they are likely to change the `-std` flag to satisfy the constraint. Given a
-`x86_64` target architecture and a Haswell CPU, they may try to use AVX2 instructions which are not available
-on previous generations. Both might produce binaries incompatible with the target defined in the toolchain.
+`x86_64` target architecture and a host with a Haswell CPU, they may try to use AVX2 instructions which are not available
+on previous generations. Both might produce binaries incompatible with the target defined in the toolchain configuration.
 
-This is a not always the build system's entire fault. Sometimes it simply *allows* a project maintainer to change the
+This is not always the build system's entire fault. Sometimes it simply *allows* a project maintainer to change the
 toolchain configuration, but won't do it if not instructed to.
 
 To me, both are wrong. The whole point of a toolchain configuration is to define a common ground for all the binaries built
@@ -103,25 +101,26 @@ maintainer to *require* some settings (failing to build if they are not met) or 
 (raising warnings if they are not met).
 
 This does not have to be the default behaviour, but at least some kind of "strict" mode should be available with a toggle flag.
-Without it, users of published libraries will always run the risk that adding a new one to their project will bring
+Without it, users of published libraries will always take a risk when adding a new one to their project: that it would bring
 hidden compatibility issues. As I already said in my previous article, it will be a serious challenge for package managers
-and any initiative to introduce a common ecosystem in C++.
+and any initiative to introduce a common ecosystem in C++ if each library in the build can change those settings.
 
 ### Settings vs compiler flags
 
 You may have wondered how Conan derived the right compile flags from the settings I shown in the previous example.
 The truth is it doesn't. Not entirely at least. For example, the `arch` will be used to pass `-m32` or `-m64`
 to the compiler, but finer settings will not because each one of them will require dedicated code in the package
-manager.
+manager. Instead, you would put a freetext setting to describe your profile and then you would need to add some
+environment variables manually under the `[env]` section.
 
-Build systems suffer from the same issue. They might know the most common used flags and expose them as settings
+Build systems suffer from the same issue. At best they might know the most common used flags and expose them as settings
 (for example CMake can set the C++ standard revision through the `CXX_STANDARD` property). And when you're trying to mix
 different libraries with different build systems, all of them need to understand those settings.
 
 This glaring issue with C++ builds was well described by Isabella Muerte at [CppCon 2017](https://youtu.be/7THzO-D0ta4):
 most build systems see toolchain settings a bunch of strings called `CXXFLAGS` and `LDFLAGS` which they can't reason about.
 
-Worse, since those flags contain both toolchain settings (target cpu, runtime, standard...) and local project flags
+Worse, since those flags contain both global toolchain settings (target cpu, runtime, standard...) and local project flags
 (include directory, defines, warnings...), build systems can't easily implement the strict mode we talked about in the previous
 section because that would require an ability to distinguish between which flags are OK to change and which are not.
 
@@ -143,7 +142,7 @@ Obviously this is a huge task, so I would first concentrate on anything that has
 * Sanitizer / profiler (`-fsanitize`, `-profile`...)
 * Threading model, exception model, calling convention, mangling convention...
 
-And since I don't know of any project that describesits toolchain by stating the ABI requirements and letting the build system
+And since I don't know of any project that describes its toolchain by stating the ABI requirements and letting the build system
 pick any suitable compiler, I would also add the most common settings not already listed:
 * Compiler (including version)
 * C++ standard revision
@@ -155,10 +154,10 @@ they are assumed to be the same. If both are given, the first one is used to bui
 serve the build process (such as code generators) and the second one for the result binaries.
 
 Finally, some settings should be available to build systems (but not toolchain configurations) to invoke the compiler:
-* Target (object file, library or executable)
+* Target type (object file, library or executable)
 * Source file(s)
-* Include search directories
 * Preprocessor defines
+* Include search directories
 * Library search directories
 * Libraries to link
 * Linkage (static vs shared)
@@ -171,11 +170,11 @@ to the build system.
 ### One more step towards a portable C++ ecosystem
 
 In retrospect, it should not be surprising that our analysis of package managers and build systems has come to this.
-Before we have a portable C++ ecosystem, we need a portable package manager. And for that we need portable build systems.
-And for that, we need a portable way to invoke compilers. And for that, we need a common language to describe build
-settings.
+Before we have a portable C++ ecosystem, we need a portable package manager. And for that we need a standard way
+to talk to build systems. And for that, we need a common language to describe the toolchain.
 
-On one hand, it's a bit scary that in 2018 we don't have one already. On the other, we see that solving one build system
-issue will also solve a good part of the problem of interactions between package managers and build systems.
+On one hand, it's a bit scary that in 2018 we don't have one already. On the other, we see that solving this issue will
+also benefit existing build systems by providing a tool to externalize compiler invocation and focus better on what we
+expect for a modern build system (proper handling of dependencies, compilation graphs and incremental recompilation).
 
-Wouldn't it be nice to stop pretending we [do header-only libraries for reasons unrelated to this](https://youtu.be/XWRbbTVcZwQ)?
+And wouldn't it be nice to stop pretending we [do header-only libraries because it's trendy](https://youtu.be/XWRbbTVcZwQ)?
