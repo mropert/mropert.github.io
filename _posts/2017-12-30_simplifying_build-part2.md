@@ -177,4 +177,4 @@ On one hand, it's a bit scary that in 2018 we don't have one already. On the oth
 also benefit existing build systems by providing a tool to externalize compiler invocation and focus better on what we
 expect for a modern build system (proper handling of dependencies, compilation graphs and incremental recompilation).
 
-And wouldn't it be nice to stop pretending we [do header-only libraries because it's trendy](https://youtu.be/XWRbbTVcZwQ)?
+And wouldn't it be nice to stop pretending we [do header-only libraries with 0 dependencies because it's trendy](https://youtu.be/XWRbbTVcZwQ)?
