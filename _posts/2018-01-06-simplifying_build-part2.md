@@ -14,9 +14,9 @@ Christmas and New Year Eve are that particular part of the year when we wish for
 Get a bottle of a 1999 DRC La Tâche, lose weight, have a C++ ecosystem with a built-in package manager...
 
 Since we computer scientists like challenge, let's take a moment to work on the hardest of those. In the 
-[previous](/2017/10/19/simplifying_build-part1/) article, we layed out a basic design for a package management standard
+[previous](/2017/10/19/simplifying_build-part1/) article, we laid out a basic design for a package management standard
 in C++. It is not perfect, but as I explained in the [quick follow-up](/2017/10/24/simplifying-build-and-api-convergence/),
-perfection was not he primary goal. That spot was reserved for compatibility and migration paths from the existing C++ ecosystem.
+perfection was not the primary goal. That spot was reserved for compatibility and migration paths from the existing C++ ecosystem.
 
 With that thought in mind, let's explore one bit of the design more in detail: the toolchain configuration.
 
@@ -38,7 +38,7 @@ In essence, a toolchain configuration is used to describe two things:
 * What machine will be needed to run the produced binaries (target requirements)
 
 The distinction between the two may seem obvious if you've worked on cross-compiled projects, but I've met a lot people who
-did not exactly thought them as separate. Perhaps their build infrastructure was always a 100% match with the target production
+did not exactly think of them as separate. Perhaps their build infrastructure was always a 100% match with the target production
 servers, or simply they never add the "luck" of hitting one of the many issues that can arise from it. Here are some
 examples:
 
@@ -81,7 +81,7 @@ Should it let the compiler use its default? Do we know which threading or except
 The good news is, we (the toolchain config maintainers) don't always have to care. It's enough for a start to define the
 minimum requirements that suit our needs and add the rest only if a specific reason arises.
 
-The bad news is, things are not simple as this, because most build systems out there won't cooperate as we expect.
+The bad news is, things are not as simple as this, because most build systems out there won't cooperate as we expect.
 Namely, two problems are likely to appear: toolchain configuration override and inability to use it as is. Let me explain.
 
 ### Read-only configuration?
@@ -91,7 +91,7 @@ a project that requires C++14, they are likely to change the `-std` flag to sati
 `x86_64` target architecture and a host with a Haswell CPU, they may try to use AVX2 instructions which are not available
 on previous generations. Both might produce binaries incompatible with the target defined in the toolchain configuration.
 
-This is not always the build system's entire fault. Sometimes it simply *allows* a project maintainer to change the
+This is not always entirely the build system's fault. Sometimes it simply *allows* a project maintainer to change the
 toolchain configuration, but won't do it if not instructed to.
 
 To me, both are wrong. The whole point of a toolchain configuration is to define a common ground for all the binaries built
@@ -124,7 +124,7 @@ Worse, since those flags contain both global toolchain settings (target cpu, run
 (include directory, defines, warnings...), build systems can't easily implement the strict mode we talked about in the previous
 section because that would require an ability to distinguish between which flags are OK to change and which are not.
 
-### Standardizing settings
+### Standardizing Settings
 
 The solution proposed by Isabella is the Universal Compiler Interface (UCI), a program or library that can translate
 build settings into flags for all compilers. It could be used by any build system to invoke the compiler with the right flags.
@@ -135,7 +135,7 @@ step in the process was for the package managers to describe what I called the "
 if the build system of a library could work with it or not. That message requires a common language, one that the
 UCI language could fit perfectly. 
 
-Obviously this is a huge task, so I would first concentrate on anything that has an effect on ABI:
+Obviously, this is a huge task, so I would first concentrate on anything that has an effect on ABI:
 * Architecture (CPU family and generation)
 * C & C++ Runtime (including version)
 * Operating system (including version too if needed)
@@ -149,9 +149,9 @@ pick any suitable compiler, I would also add the most common settings not alread
 * Inclusion of debug symbols
 * Optimization level
 
-Of course there would be two sets of toolchain settings, `host` and `target`, to handle cross compilation. If only one is given,
+Of course, there would be two sets of toolchain settings, `host` and `target`, to handle cross compilation. If only one is given,
 they are assumed to be the same. If both are given, the first one is used to build intermediary tools that may
-serve the build process (such as code generators) and the second one for the result binaries.
+serve the build process (such as code generators) and the second one for the resultant binaries.
 
 Finally, some settings should be available to build systems (but not toolchain configurations) to invoke the compiler:
 * Target type (object file, library or executable)
@@ -164,7 +164,7 @@ Finally, some settings should be available to build systems (but not toolchain c
 
 Some of you will probably remark that this looks a lot like `libtool` and you would be right. There are similiarities, except
 that here we handle more C++ specificities and try to work with all compilers and platforms, not only the GNU ones. Also,
-we only concerns ourselves with compiler invocation, while `libtool` also handles install and other things we prefer to leave
+we only concern ourselves with compiler invocation, while `libtool` also handles install and other things we prefer to leave
 to the build system.
 
 ### One more step towards a portable C++ ecosystem
