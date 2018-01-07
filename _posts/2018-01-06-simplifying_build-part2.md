@@ -162,7 +162,7 @@ Finally, some settings should be available to build systems (but not toolchain c
 * Libraries to link
 * Linkage (static vs shared)
 
-Some of you will probably remark that this looks a lot like `libtool` and you would be right. There are similiarities, except
+Some of you will probably remark that this looks a lot like `libtool` and you would be right. There are similarities, except
 that here we handle more C++ specificities and try to work with all compilers and platforms, not only the GNU ones. Also,
 we only concern ourselves with compiler invocation, while `libtool` also handles install and other things we prefer to leave
 to the build system.
