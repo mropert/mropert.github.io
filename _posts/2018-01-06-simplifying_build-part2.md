@@ -139,7 +139,7 @@ Obviously, this is a huge task, so I would first concentrate on anything that ha
 * Architecture (CPU family and generation)
 * C & C++ Runtime (including version)
 * Operating system (including version too if needed)
-* Sanitizer / profiler (`-fsanitize`, `-profile`...)
+* Sanitizer / profiler (`-fsanitize`, `-fprofile`...)
 * Threading model, exception model, calling convention, mangling convention...
 
 And since I don't know of any project that describes its toolchain by stating the ABI requirements and letting the build system
