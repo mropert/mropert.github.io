@@ -95,7 +95,7 @@ This is not always entirely the build system's fault. Sometimes it simply *allow
 toolchain configuration, but won't do it if not instructed to.
 
 To me, both are wrong. The whole point of a toolchain configuration is to define a common ground for all the binaries built
-for it. Changing it behind the scenes may result it binaries not usable by all targeted clients, or even incompatible binaries within
+for it. Changing it behind the scenes may result in binaries not usable by all targeted clients, or even incompatible binaries within
 the same project (for example if two libraries overwrite with incompatible settings). A build system should only allow the project
 maintainer to *require* some settings (failing to build if they are not met) or *recommend* them
 (raising warnings if they are not met).
