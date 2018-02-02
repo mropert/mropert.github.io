@@ -29,11 +29,11 @@ races bugs.
 
 I rebuilt my test with `-fsanitize=thread` and went on my merry way:
 
-...
+`g++: error: -fsanitize=thread linking must be done with -pie or -shared`
 
 Oops, I forgot to add `-pie` and `-fPIE` as suggested in the doc. Let's try again:
 
-...
+`ld: gtest/lib/libgtest.a(gtest-all.cc.o): relocation R_X86_64_32S against `_ZTVN7testing8internal17TestEventRepeaterE' can not be used when making a shared object; recompile with -fPIC`
 
 Still not good. My gtest library was not built for position-independent code :(
 
@@ -67,11 +67,11 @@ Position Independent Executables are created from objects built with `-fPIE`.
 Of course since we're doing native code, this means this is yet another thing to keep in mind to determine whether or not
 binaries can work together. The [documentation](https://gcc.gnu.org/onlinedocs/gcc-7.2.0/gcc/Code-Gen-Options.html#Code-Gen-Options)
 can be hard to process so here's a summary:
-* Position-Independent executables may only be created from PIE objects (`.o`) or PIE static libraries (`.a`)
-* PIC shared libraries can be created from PIC or PIE objects or static libraries
-* Non-PIE executables(*) can be created from any objects or static libraries
+* Position Independent executables may be created from PIC or PIE objects (`.o`) and PIC or PIE static libraries (`.a`)
+* PIC shared libraries can only be created from PIC objects or static libraries
+* Non-PIE executables<sup>1</sup> can be created from any objects or static libraries
 
-In practice, the most simple solution would be to build everything with `-fPIE` and be done with it. But this is C++, we
+In practice, the most simple solution would be to build everything with `-fPIC` and be done with it. But this is C++, we
 like to brag about the fact that we only pay for what we use, so obviously a finer rule may be needed:
 * If the object is to be linked as a shared library, or a static library linked to a shared library, use `-fPIC`
 * If the object is to be linked as a position indenpendent executable, or a static library linked to a
@@ -94,7 +94,7 @@ wouldn't work, since PIE requires to add `-pie` to link flags only when linking 
 you won't be able to link shared libraries anymore. A more native setting would be required, that would set the right
 flags for each generator (CMake, Autotools...) and possibly some workaround in package recipes too.
 
-In my case, I "solved the issue" by enforcing `-fPIE` in my Conan profile, then patching the recipe of the final executable
+In my case, I "solved the issue" by enforcing `-fPIC` in my Conan profile, then patching the recipe of the final executable
 to add `-pie` by hand using `CMAKE_EXE_LINKER_FLAGS`. It wasn't pretty and would probably be hard to scale but it did the job.
 
 ### Performance and final words
@@ -107,9 +107,17 @@ by the fact that it works in "reverse": you must know how your code will be fina
 
 Package managers (and to a lesser extent build systems) can help with that but are still far from perfect on the matter.
 
-In the end the easiest solution might simply be to always compile with `-fPIE`, and let the final linker decide if it wants
+In the end the easiest solution might simply be to always compile with `-fPIC`, and let the final linker decide if it wants
 a PIE or not. I did not run the benchmarks, but it seems like the impact is negligible for general purpose x86_64 code.
 It is not as easy on x86 32 bits: according to [this paper](http://nebelwelt.net/publications/files/12TRpie.pdf),
 you should expect a 10% overhead on average.
 
+There is also an impact from using `-fPIC` in cases where only `-fPIE` would have been enough, but it is different to
+quantify. If there are compilers/linkers gurus among my readers, I would be glad to have the exact details. I would
+expect an even smaller than between `-fPIC` and nothing. When in doubt, you could try to benchmark both on your use
+case and decide whether or not it's worth patching all your toolchain to handle that properly, especially given
+the weak support from existing build tools.
+
 As for my random bug, as it turned out TSAN didn't find anything either, but at least I got a topic for my blog :)
+
+<sup>1</sup> I know, "PIE executable" is an unecessary repetition, like PDF file.
