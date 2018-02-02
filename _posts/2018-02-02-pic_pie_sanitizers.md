@@ -24,7 +24,7 @@ has a simple way to work with ASAN. I'll come back to that part later.
 Facing the perspective of needing to patch a couple Conan recipes for ASAN, I took a break and started to wonder if maybe
 the issue was a threading issue. Race conditions could explain why it was near impossible to reproduce.
 Fortunately ASAN is not the only one of its kind, there's also (among others)
-(ThreadSanitizer)[https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual] (TSAN) that specializes in data
+[ThreadSanitizer](https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual) (TSAN) that specializes in data
 races bugs.
 
 I rebuilt my test with `-fsanitize=thread` and went on my merry way:
@@ -39,14 +39,14 @@ Still not good. My gtest library was not built for position-independent code :(
 
 ### Pics and pies
 
-Position-independent code (PIC) is a very old thing (in computer science terms, of course). Back before we had MMUs and paging
-all code had to share physical addresses, so it quickly made sense to make sure a program could be loaded at any address.
+Position-independent code (PIC) is a very old thing (in computer science terms, of course). Back before we had MMUs and paging,
+all processes had to share physical address space, so it quickly made sense to make sure a program could be loaded at any address.
 When CPUs evolved and each process could have its own logical address space arbitrarly mapped to any physical address, PIC
 was not mandatory anymore.
 
 It came back with shared libraries. The reason we are taught early to put `-fPIC` when we build `.so` files is to ensure that
 the same code can be used by multiple process which will map the same physical memory to various virtual addresses.
-Praticaly it eliminates all absolute addressing, replacing it with either relative addressing or a small jump table that
+Practicaly it eliminates all absolute addressing, replacing it with either relative addressing or a small jump table that
 can be forked for each process. It also comes with a small cost, which is why it's not always enabled by default (more about that
 later).
 
@@ -73,8 +73,8 @@ can be hard to process so here's a summary:
 
 In practice, the most simple solution would be to build everything with `-fPIC` and be done with it. But this is C++, we
 like to brag about the fact that we only pay for what we use, so obviously a finer rule may be needed:
-* If the object is to be linked as a shared library, or a static library linked to a shared library, use `-fPIC`
-* If the object is to be linked as a position indenpendent executable, or a static library linked to a
+* If the object is to be linked as a shared library, or a static library that will in turn be linked in a shared library, use `-fPIC`
+* If the object is to be linked as a position indenpendent executable, or astatic library that will in turn be linked in
   position independent executable, use `-fPIE`
 * Else, use neither
 
@@ -112,9 +112,9 @@ a PIE or not. I did not run the benchmarks, but it seems like the impact is negl
 It is not as easy on x86 32 bits: according to [this paper](http://nebelwelt.net/publications/files/12TRpie.pdf),
 you should expect a 10% overhead on average.
 
-There is also an impact from using `-fPIC` in cases where only `-fPIE` would have been enough, but it is different to
+There is also an impact from using `-fPIC` in cases where only `-fPIE` would have been enough, but it is difficult to
 quantify. If there are compilers/linkers gurus among my readers, I would be glad to have the exact details. I would
-expect an even smaller than between `-fPIC` and nothing. When in doubt, you could try to benchmark both on your use
+expect an even smaller impact than between `-fPIC` and nothing. When in doubt, you could try to benchmark both on your use
 case and decide whether or not it's worth patching all your toolchain to handle that properly, especially given
 the weak support from existing build tools.
 
