@@ -33,7 +33,7 @@ I rebuilt my test with `-fsanitize=thread` and went on my merry way:
 
 Oops, I forgot to add `-pie` and `-fPIE` as suggested in the doc. Let's try again:
 
-`ld: gtest/lib/libgtest.a(gtest-all.cc.o): relocation R_X86_64_32S against `_ZTVN7testing8internal17TestEventRepeaterE' can not be used when making a shared object; recompile with -fPIC`
+```ld: gtest/lib/libgtest.a(gtest-all.cc.o): relocation R_X86_64_32S against `_ZTVN7testing8internal17TestEventRepeaterE' can not be used when making a shared object; recompile with -fPIC```
 
 Still not good. My gtest library was not built for position-independent code :(
 
