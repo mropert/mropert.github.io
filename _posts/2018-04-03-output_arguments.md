@@ -31,7 +31,7 @@ That piece of wisdom didn't come from nowhere, in fact it's written in the
 >
 > **Reason** This makes it clear to callers that the object is assumed to be modified.
 
-So if it's still widely debated, maybe it's because no satisfactory solution has been found so far.
+But if it's still widely debated, maybe it's because no satisfactory solution has been found so far.
 
 I'll try to recap the various arguments for each case before offering my own suggestion
 that goes in a different direction.
