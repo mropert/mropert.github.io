@@ -16,7 +16,7 @@ In this third article, we will try to explore the description of a project itsel
 
 ## Anything to declare?
 
-There are usually two flavours of a build configuration you can find out there: scipted or declarative. The first one
+There are usually two flavours of a build configuration you can find out there: scripted or declarative. The first one
 works like a script or program which execution produces the build artifacts (programs, libraries...) and the second
 one is simply a set of values describing the project that the build system can put together to know how to build it.
 
