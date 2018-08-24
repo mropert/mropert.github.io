@@ -8,18 +8,20 @@ mropert:
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
-    My name is Mathieu, I'm 33 and I write C++ for a living.
+    My name is Mathieu, I'm 34 and I write C++ for a living.
 
-    I was born (and currently reside) in France so of course I'm a pedantic snob who likes wine and pastries.
+    I was born in France so of course I'm a pedantic snob who likes wine and pastries.
 
     Clichés aside, I enjoy coding, automating stuff, photography, cinema, role-playing games (both pen & paper and live action) and video games.
     And also wine (but not only the french ones).
 
-    I've worked in various areas, ranging from kernel programming to web development and databases.
+    I've worked in various areas, ranging from kernel programming to web development, financial software, databases and videogames.
     My current favorite subject is package management, which I think the lack of has been holding back C++ for years now.
 
-    You should easily be able meet me at the [C++ French User Group (CppFRUG)](http://cppfrug.org/) meetups which I co-organize in Paris,
-    but also at [CppCon](https://cppcon.org/) and [Meeting C++](http://meetingcpp.com/).
+    I Used to run the [C++ French User Group (CppFRUG)](http://cppfrug.org/) meetup in Paris but have since moved to Sweden.
+
+    You should easily be able meet me at the [Sweden C++ Meetup](https://www.meetup.com/swedencpp/) in Stockholm,
+    but also at various C++ conferences where I usually try to attend.
 
   # This photo will be used in the about section
   picture:
