@@ -75,7 +75,7 @@ I found or heard to be discouraged in some places:
 * Using the STL. That may look obvious, but some still don't trust it today. This may come from previous bad experiences
   (some implementations were indeed buggy in the 90s/2000s), a policy against templates (see next item) or simply a case
   of NIH ([Not Invented Here](https://en.wikipedia.org/wiki/Not_invented_here)). Whatever the reason, the fact remains
-  that the STL today is well designed library provided with every compiler on every platform. Yes, some bits have their shortcomings
+  that the STL today is a well designed library provided with every compiler on every platform. Yes, some bits have their shortcomings
   (iostreams, futures...), and some containers could be better optimized if some constraints from the standard were
   to be relaxed (`std::unordered_map` for example), but in which case there's probably a replacement or a more specialized
   alternative in discussion somewhere. And if not, it's probably a prime subject for a new paper. You may use alternatives
