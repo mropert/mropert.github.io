@@ -132,5 +132,5 @@ Stay tuned!
 PS: Of course this is just an idea, maybe an embryo of a proposal. Feel free to send any comment, objection, suggestion or encouragement
 by email, Twitter or on CppChat.
 
-Edit: I wrote a quick [follow-up](/2017/10/24/simplifying-build-and-api-convergence/) to clarify somz points after reading
+Edit: I wrote a quick [follow-up](/2017/10/24/simplifying-build-and-api-convergence/) to clarify some points after reading
 the reactions.
