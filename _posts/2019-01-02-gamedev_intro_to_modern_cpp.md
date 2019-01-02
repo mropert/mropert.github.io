@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Gamedev introduction to "Modern" C++
+title: Gamedev introduction to 'Modern' C++
 tags: [cpp]
 description: >
   Is the C++ committee out of touch with its users, or is the game development crowd out of touch
   with the rest of the C++ community? Following the recent debate on social media, I offer a small
-  introduction of that "Modern" C++ thingie.
+  introduction of that 'Modern' C++ thingie.
 author: mropert
 ---
 
