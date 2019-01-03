@@ -111,7 +111,7 @@ couple of [CppCast](http://cppcast.com/) episodes to listen to. Each week Rob an
 someone from the community and share recent news about C++.
 
 Also, since historically the gamedev community doesn't trust its compiler, the
-[Goldbolt](https://godbolt.org/)<sup>1</sup> is an invaluable resource.
+[Godbolt](https://godbolt.org/)<sup>1</sup> is an invaluable resource.
 
 And of course, you should always measure, so better run the code through [QuickBench](http://quick-bench.com/).
 
