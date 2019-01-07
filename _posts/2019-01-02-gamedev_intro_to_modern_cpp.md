@@ -106,6 +106,11 @@ them publish all the recordings freely on youtube:
 * [MeetingCpp](https://www.youtube.com/user/MeetingCPP/videos)
 * [Pacific++](https://www.youtube.com/channel/UCrRR5mU5aqvtZAuEGYfdTjw/videos)
 
+To help you follow all the guidelines and best practices that are shared in conferences and blog
+posts and others, Bjarne and Herb (and many more now) maintain the
+[C++ Core Guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). When in doubt,
+check them!
+
 For readers who commute to work, or go running, or whatever else, it's always good to save up a
 couple of [CppCast](http://cppcast.com/) episodes to listen to. Each week Rob and Jason interview
 someone from the community and share recent news about C++.
