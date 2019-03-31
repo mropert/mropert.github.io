@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Gamedev introduction to 'Modern' C++
-tags: [cpp]
+tags: [cpp,gamedev]
 description: >
   Is the C++ committee out of touch with its users, or is the game development crowd out of touch
   with the rest of the C++ community? Following the recent debate on social media, I offer a small
