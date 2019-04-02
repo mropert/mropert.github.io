@@ -18,8 +18,9 @@ an active lifespan of half a decade or more. While MMORPGs and other multiplayer
 part of that category, they are not alone in here.
 
 At Paradox, we keep releasing new content for our strategy games more than 5 years after release.
-The title I'm working on, Europa Universalis IV, will get a new expansion pack later this year,
-while it celebrates its 6th birthday.
+The title I'm working on,
+[Europa Universalis IV](https://www.paradoxplaza.com/europa-universalis-iv/EUEU04GSK-MASTER.html),
+will get a new expansion pack later this year, while it celebrates its 6th birthday.
 
 People are sometimes surprised to hear me say that the build uses C++14. After all, ISO C++14 was
 not standardized at the time of release, and even C++11 support in compilers was a bit wonky when
