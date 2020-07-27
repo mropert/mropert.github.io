@@ -187,6 +187,8 @@ The timeline visualization of cores activity in particular was quite handy to fi
 CPU could be more effectively utilized. I found it useful to both verify assumptions but also to
 get a sense of some bits of the codeline that I wasn't familiar with.
 
+![Profile of game startup before changes](/assets/img/posts/stellaris_startup.png)
+
 For example, it made me realize that all the game music in some of our titles was loaded upfront
 while the only one we really cared about during startup was the main theme. A moderate refactoring
 of the music player implementation allowed me to load only that particular track, and start a low
