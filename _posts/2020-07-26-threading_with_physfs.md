@@ -201,7 +201,11 @@ won't hurt performance of the main activity.
 
 ## In Conclusion
 
-I do not consider myself new to threading and related topics, yet I still did not believe
+First, see for yourself the difference on a side by side comparison I recorded on my home computer booting Stellaris (i7 2600k, 16GB of RAM, game installed on SSD drive):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/a6MWyc0wIo8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Now, I do not consider myself new to threading and related topics, yet I still did not believe
 at first that I would be able to achieve such a drastic improvement. By the end of the iteration
 we had at least one game starting up more than twice as fast as it used to do on my machine
 (from over a minute to a few tens of seconds).
