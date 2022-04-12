@@ -5,14 +5,52 @@ menu: true
 order: 99
 ---
 
+## Talks
+
+### 2022
+
+* _The Basics of Profiling_ (ACCU 2022). A longer version than the 2021 CppCon version.
+
+### 2021
+
+* _[Multi Threading Model in Paradox Games: Past, Present and Future](https://www.youtube.com/watch?v=e_2z7uWouuk)_ (CppCon 2021)
+* _[The Basics of Profiling](https://www.youtube.com/watch?v=dToaepIXW4s)_ (CppCon 2021) 
+* _[This Videogame Developer Used the STL and You'll Never Guess What Happened Next](https://www.youtube.com/watch?v=xoEUO9DezV8)_
+  (ACCU 2021). A revised, longer version of the 2019 CppCon version.
+
+### 2020
+
+* _[Making Games Start Fast: A Story About Concurrency](https://www.youtube.com/watch?v=TcuPIVKNSN0)_ (CppCon 2020)
+
+### 2019
+
+* _[Build for everyday programmers and why should they care](https://www.youtube.com/watch?v=Car3fQXm6Rs)_ (code::dive 2019)
+* _[This Videogame Developer Used the STL and You'll Never Guess What Happened Next](https://www.youtube.com/watch?v=6hC9IxqdDDw)_
+  (CppCon 2019)
+* _[The State of Package Management in C++](https://www.youtube.com/watch?v=k99_qbB2FvM)_ (ACCU 2019)
+
+### 2018
+
+*_ [Early Modern C++: How to Handle a C++03 Codebase in $CURRENT_YEAR](https://www.youtube.com/watch?v=76uHxUi6L5g)_ (CppCon 2018)
+* _[C++ API & ABI versioning](https://www.youtube.com/watch?v=455A97XJLNk)_ (ACCU 2018). Expanded version from the original CppCon 2017 talk.
+
+### 2017
+
+
+* _[Modern CMake for modular design](https://www.youtube.com/watch?v=ztrnb-bVVPo)_ (Meeting C++). Revised from CppCon but lower recording quality.
+* _[C++ API & ABI versioning](https://www.youtube.com/watch?v=k9PLRAnnEmE)_ (Meeting C++). Revised from CppCon but lower recording quality.
+* _[Modern CMake for modular design](https://www.youtube.com/watch?v=eC9-iRN2b04)_ (CppCon 2017)
+* _[C++ API & ABI versioning](https://www.youtube.com/watch?v=Ia3IDPjA-d0)_ (CppCon 2017)
+
+
 ## Projects
 
-With a colleague of mine, we wrote a unified C++ API to query all sorts of SQL databases.
-It's called CDBC and it's unfortunately not open-source yet.
-In the meantime you can take a look at the [poster](https://github.com/murex/cdbc/blob/master/poster/CDBC%20CppCon%202016%20Poster.pdf)
-we shown at CppCon 2016.
+With an ex-colleague of mine, we wrote a unified C++ API to query all sorts of SQL databases.
+It's called CDBC but unfortunately the company never managed to release it open-source.
+You can still take a look at the [poster](https://github.com/murex/cdbc/blob/master/poster/CDBC%20CppCon%202016%20Poster.pdf)
+we shown at CppCon 2016 for inspiration.
 
-I'm also a contributor to the [Conan C++ Package Manager](https://www.conan.io/).
+I also used to be a contributor to the [Conan C++ Package Manager](https://www.conan.io/).
 
 ## Contact
 
