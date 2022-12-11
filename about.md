@@ -9,8 +9,8 @@ order: 99
 
 ### 2022
 
-* _[Breaking Enigma With the Power of Modern C++](https://www.youtube.com/watch?v=zx3wX-fAv_o) (CppCon 2022). Also given live at Stockholm C++ and Meeting C++ 2022.
-* _[The Basics of Profiling_](https://www.youtube.com/watch?v=vqeXRFW26kg) (ACCU 2022). A longer version than the 2021 CppCon version.
+* _[Breaking Enigma With the Power of Modern C++](https://www.youtube.com/watch?v=zx3wX-fAv_o)_ (CppCon 2022). Also given live at Stockholm C++ and Meeting C++ 2022.
+* _[The Basics of Profiling_](https://www.youtube.com/watch?v=vqeXRFW26kg)_ (ACCU 2022). A longer version than the 2021 CppCon version.
 
 ### 2021
 
