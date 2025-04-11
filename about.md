@@ -7,9 +7,17 @@ order: 99
 
 ## Talks
 
+### 2024
+* _[Heaps Don't Lie: Guidelines for Memory Allocation in C++](https://www.youtube.com/watch?v=QN3FhjSp7P8)_ (code::dive 2024 and ACCU 2025)
+
+### 2023
+* _[Multi Threading Model in Paradox Games: Past, Present and Future (updated version)](https://www.youtube.com/watch?v=M6rTceqNiNg)_ (ACCU 2023)
+* _[Data Storage in Entity Component Systems](https://www.youtube.com/watch?v=xm4AQj5PHT4)_ (Meeting C++ 2023, code::dive 2023 and ACCU 2024)
+* _[Introduction to Code Sanitizers](https://www.youtube.com/watch?v=NTZ_zUp8uyA)_ (code::dive 2023)
+
 ### 2022
 
-* _[Breaking Enigma With the Power of Modern C++](https://www.youtube.com/watch?v=zx3wX-fAv_o)_ (CppCon 2022). Also given live at Stockholm C++ and Meeting C++ 2022.
+* _[Breaking Enigma With the Power of Modern C++](https://www.youtube.com/watch?v=zx3wX-fAv_o)_ (CppCon 2022). Also given live at Stockholm C++ and Meeting C++ 2022 and ACCU 2023.
 * _[The Basics of Profiling_](https://www.youtube.com/watch?v=vqeXRFW26kg)_ (ACCU 2022). A longer version than the 2021 CppCon version.
 
 ### 2021
@@ -57,4 +65,4 @@ I also used to be a contributor to the [Conan C++ Package Manager](https://www.c
 
 You can contact me by email: [mro@puchiko.net](mailto:mro@puchiko.net).
 
-I'm also on Twitter: [@MatRopert](https://twitter.com/MatRopert).
+I'm also on Twitter: [@MatRopert](https://twitter.com/MatRopert) and Bluesky: [@matropert.bsky.social](https://bsky.app/profile/matropert.bsky.social).

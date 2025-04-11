@@ -8,7 +8,7 @@ mropert:
   # Used at the bottom of each page and at the top of the `about` layout
   # Markdown enabled, can use multiple paragraphs (enabled by `|`)
   about:             |
-    My name is Mathieu, I'm 38 and I write C++ for a living.
+    My name is Mathieu, I'm 41 and I write C++ for a living.
 
     I was born in France so of course I'm a pedantic snob who likes wine and pastries.
 
@@ -16,7 +16,7 @@ mropert:
     And also wine (but not only the french ones).
 
     I've worked in various areas, ranging from kernel programming to web development, financial software, databases and videogames.
-    My current favorite subject is package management, which I think the lack of has been holding back C++ for years now.
+    My current favorite subject is performance in game programming.
 
     I Used to run the [C++ French User Group (CppFRUG)](http://cppfrug.org/) meetup in Paris but have since moved to Sweden.
 
