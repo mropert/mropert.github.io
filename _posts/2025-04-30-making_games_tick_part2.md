@@ -46,6 +46,78 @@ and the only thing one can tell is... "I have no idea". To be able to tell, one 
 of each `GameObject::tick()` override and then make a guess about the order they are evaluated (by type? by spawn timestamp?)
 and then another guess about which ones are active and which one may not.
 
+A lot of criticism of Object Oriented Programming has been written over the years, especially in games
+programming circles, so it is a bit curious to see at the heat of most game engines in its most canonically
+wrong form.
+
+This isn't an exaggeration, one of the biggest issues brought up against OOP architectures is
+how they tend to overgeneralize concepts to the point of meaninglessness. Take a `Shape` or a `Mesh`
+base class for example, they could have hundreds of derived implementations with their own specificities,
+but you could reasonably make an argument for a common virtual `draw()` method. This is a fairly specific
+task to be delegated to a virtual method which encapsulates the implementation details of how that shape
+or mesh is drawn. But in the case of a game object, a `tick()` method would encapsulate just about _all_
+its behaviour without telling anything about it.
+
+Contrast it with this implementation:
+
+```cpp
+struct World
+{
+    Player player;
+    std::vector<Ghost> ghosts;
+    std::vector<2DPoint> dots;
+    std::vector<2DPoint> powerUps;
+};
+
+static World world;
+
+void updateSimulation()
+{
+    movePlayer( world.player );
+    eat( world.player, world.dots, world.powerUps );
+    moveGhosts( world.ghosts );
+    handleCollisions( world.player, world.ghosts );
+    if ( world.player.dead )
+    {
+        gameOver();
+    }
+    else if ( world.dots.empty() )
+    {
+        loadNextLevel( world );
+    }
+}
+```
+
+While this isn't a particularly amazing implementation (you would probably want to abstract at least the part
+that handles what happens when the player collides with a dot, power up or ghost), one could tell at a glance
+that our game is probably some sort of Pac-Man clone and build a mental model of how the game simulation flows.
+Most importantly (in my opinion), it expresses the simulation in terms of a series of tasks (do this, then do that...)
+and their arguments (which game objects they might read or write to) from the top-down, instead of asking each
+object to do its thing, and maybe impact the rest of the simulation in the process (bottom-up).
+
+To some degree, this all goes back to the basic (but hard) software engineering principle of dividing the program
+into sub routines and _giving them good names_. Having a virtual `Tick()` (or `Update()`, or `_process()`) achieves
+some of the former, but definitely not the latter.
+
+Finally, having a bottom-up model makes it real hard to parallelize / use multiple threads to update the simulation,
+as it makes it almost impossible to reason about data races. We will come back to this point in later episodes.
+
+## The case for ticking
+
+So, if this model is so bad, why is it so widespread? While I cannot claim to speak for the whole industry
+(or even for the maintainers/architects of publicly available engines), I can probably makes a few educated
+guesses.
+
+The most classic answer would be legacy. We do things this way because engines did it in the late 90s and early
+2000s. If you take a look at the source code of IDTech based games of the era (such as
+[Quake III Arena](https://github.com/id-Software/Quake-III-Arena/blob/master/code/game/g_main.c#L1713) or
+[Half-Life](https://github.com/ValveSoftware/halflife/blob/master/engine/eiface.h#L432)) you will find a
+`think` function pointer on each entity that is called each frame (with a timer check for cool down).
+
+Game PCs had only one core up to early 2010s, so multithreading game simulation would bring more complexity
+for little to no benefits. And the number of entities that need to tick each frame was fairly low. If you add
+up all the monsters, players, vehicles and projectiles at any given time in a level, you'd likely be under a hundred.
+And a significant portion of them wouldn't need to tick each frame.
 
 
 ## Ticking the world
