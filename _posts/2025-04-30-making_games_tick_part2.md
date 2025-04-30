@@ -7,21 +7,21 @@ description: >
 author: mropert
 ---
 
-Most game engines handle simulation tick calling a overridable method on each game object. Why is that?
+Most game engines handle simulation tick by calling an overridable method on each game object. Why is that?
 And is that the only approach out there? Isn't it odd that a very objected-oriented approach is the default
 in an industry that [keeps complaining that OOP is bad and we should do data driven instead](https://www.youtube.com/watch?v=rX0ItVEVjHc)?
 
 In this series of articles we talk game simulation performance and architecture. In the
 [previous episode](/2025/04/23/making_games_tick_part1/) we went over the basics of a game main loop and
-how it often implemented (although in a simplified manner for the sake of getting started). Today
+how it is often implemented (although in a simplified manner for the sake of getting started). Today
 we take a step back and think about flow and architecture.
 
 ## Why so abstract?
 
 When I first had a look at commonly used engines (such as Unreal, Unity and Godot) and the way they handle ticks
-it felt pretty weird and alien to me. I have spent most of my time in game development working with custom engines,
+it felt pretty weird and alien to me. I have spent most of my time in game development career working with custom engines,
 especially with the Clausewitz Engine at Paradox Development Studio (don't bother looking it up on the internet,
-most pages I could find about it are out of date, completely wrong, or both). Let me explain by bringing back
+most pages I could find about it are out of date, completely wrong, or both). Let me explain what I mean by bringing back
 the basic sample from our previous episode.
 
 ```cpp
@@ -44,10 +44,10 @@ void updateSimulation()
 Now say you are new to the codebase and you ask yourself "what does the game simulation do?". You look at this
 and the only thing one can tell is... "I have no idea". To be able to tell, one would have to look up the implementation
 of each `GameObject::tick()` override and then make a guess about the order they are evaluated (by type? by spawn timestamp?)
-and then another guess about which ones are active and which one may not.
+and then another guess about which ones are active and which ones may not.
 
 A lot of criticism of Object Oriented Programming has been written over the years, especially in games
-programming circles, so it is a bit curious to see at the heat of most game engines in its most canonically
+programming circles, so it is a bit curious to see at the heart of most game engines in its most canonically
 wrong form.
 
 This isn't an exaggeration, one of the biggest issues brought up against OOP architectures is
@@ -55,8 +55,8 @@ how they tend to overgeneralize concepts to the point of meaninglessness. Take a
 base class for example, they could have hundreds of derived implementations with their own specificities,
 but you could reasonably make an argument for a common virtual `draw()` method. This is a fairly specific
 task to be delegated to a virtual method which encapsulates the implementation details of how that shape
-or mesh is drawn. But in the case of a game object, a `tick()` method would encapsulate just about _all_
-its behaviour without telling anything about it.
+or mesh is drawn. But in the case of a game object, a `tick()` method would encapsulate just about _any and all_
+behaviour without telling anything about it.
 
 Contrast it with this implementation:
 
@@ -99,13 +99,13 @@ To some degree, this all goes back to the basic (but hard) software engineering 
 into sub routines and _giving them good names_. Having a virtual `Tick()` (or `Update()`, or `_process()`) achieves
 some of the former, but definitely not the latter.
 
-Finally, having a bottom-up model makes it real hard to parallelize / use multiple threads to update the simulation,
+Lastly, having a bottom-up model makes it real hard to parallelize / use multiple threads to update the simulation,
 as it makes it almost impossible to reason about data races. We will come back to this point in later episodes.
 
 ## The case for ticking
 
 So, if this model is so bad, why is it so widespread? While I cannot claim to speak for the whole industry
-(or even for the maintainers/architects of publicly available engines), I can probably makes a few educated
+(or even for the maintainers/architects of publicly available engines), I can probably make a few educated
 guesses.
 
 The most classic answer would be legacy. We do things this way because engines did it in the late 90s and early
@@ -115,80 +115,25 @@ The most classic answer would be legacy. We do things this way because engines d
 `think` function pointer on each entity that is called each frame (with a timer check for cool down).
 
 Game PCs had only one core up to early 2010s, so multithreading game simulation would bring more complexity
-for little to no benefits. And the number of entities that need to tick each frame was fairly low. If you add
-up all the monsters, players, vehicles and projectiles at any given time in a level, you'd likely be under a hundred.
-And a significant portion of them wouldn't need to tick each frame.
+for little to no benefits. And the number of entities that needed to tick each frame was fairly low. If you add
+up all the monsters, players, vehicles and projectiles (usually not including firearms, those mostly used hitscan)
+at any given time in a level, you'd be in the low hundreds at most. And a significant portion of them wouldn't
+need to tick each frame.
 
+One important thing to note: all those engines (IDTech, Unreal, Source...) were originally made with first person shooters
+in mind. As the old adage goes: use the right tool for the right job. When making a game that relies on a fairly complex
+simulation of the world such as Grand Strategy Game, with intrinsics hierarchies and lots of interactions between game objects
+outside of physics, I would argue it is important to be able to reason about the big picture. When making a first or
+third person game, where a lot if it comes down to physics simulation, which is usually handled as its own separate thing outside of
+object ticks (unless a game decides to entirely ignore the engine's physics system and implements its own), maybe less so. I do however
+suspect this model would become unwieldy and hard to optimize when used for game AI at scale. For example try to imagine how you would simulate a 
+large number of NPCs in a busy city going about their day around the player.
 
-## Ticking the world
+## Ticking's final boss
 
-Updating the simulation is often called "ticking". The word is unrelated to the bug of the same name (although it's often
-the cause of them), it's related to the passage of time. Think of a clock ticking. The world "ticks" each time the clock
-arm moves one unit. Which in turns notifies each game object (the objects that participate in the game simulation, such as
-players, monsters, npcs, vehicles and environment objects with physics attached).
+Finally, there is one big challenge when it comes to reasoning about a tick's architecture and that's external bindings.
+Or as they most commonly manifest: scripting. How can one quickly assess what a game object tick does if it's not
+part of their Visual Studio solution and they need to find/open an external text file written in another language (or worse, a visual script)?
+Short answer: they can't, at least not easily or without good tooling.
 
-```cpp
-// Rudimentary simulation update
-static std::vector<std::unique_ptr<GameObject>> allObjects;
-
-void updateSimulation()
-{
-    for ( auto gameObject : allObjects )
-    {
-        gameObject->tick();
-    }
-}
-```
-
-If you look at publicly available game engines like Godot, Unity and Unreal you will notice something similar (although
-usually more complex in implementation).
-Godot game objects have a `_process()` virtual method called each frame. On Unity it's called `Update()`. And `Tick()`
-on Unreal. And while game engines can offer a smarter way to update than calling each object in serial, this is a good starting
-point to reason about ticks.
-
-## Real-time vs game time
-
-An astute reader (or someone who's already versed in game development) may have noticed an issue in this model already.
-The frequency of updates is tied to the frame rate. This has been an issue for a long time, although not as long as one
-may think. Older consoles and arcades had only one hardware variant and no time-sharing operating system, meaning the
-framerate/tickrate could sometimes be consistent enough to be relied upon without an extra timer.
-
-A common anecdote, the original Space Invaders from 1978 didn't originally intend to have the difficulty ramp up as the game went.
-It turned out to be a side effect of have less monsters to update and render, making the game tick faster. If they had
-Jira back in the 70s, the bug report would have been closed as "Working As Designed".
-
-One very common way to solve this today is by using "delta time":
-
-```cpp
-// Slightly less rudimentary simulation update
-static std::vector<std::unique_ptr<GameObject>> allObjects;
-static std::chrono::steady_clock::time_point lastUpdate;
-
-void updateSimulation()
-{
-    const auto now = std::chrono::steady_clock::now();
-    const auto deltaTime = lastUpdate - now;
-    for ( auto gameObject : allObjects )
-    {
-        gameObject->tick( deltaTime );
-    }
-    lastUpdate = now;
-}
-```
-
-This way, each object can update independently of the frame rate and also possibly absorb spikes. Physics
-in particular are often expressed as "some formula divided by deltaTime". In practice the deltaTime
-is often expressed as a fraction of 1s `float` instead, which allows for multiplication instead of division
-in calculations, a common form of [strength reduction](https://en.wikipedia.org/wiki/Strength_reduction).
-
-## The bigger picture
-
-With those basics out of the way I can leave you with some thoughts while you wait for the next articles in the
-series. Over its course we will try to answer two questions especially:
-
-1. How can one reason about a game tick update? Especially build a mental model of what happens and in which order.
-2. How can we optimize the computation of a game tick? In particular, can we throw multiple threads at the problem
-  and if so, how?
-3. Can we find a way to render the current state of the simulation while simultaneously computing the next state?
-
-Until next time!
+For the longer answer, we will have to wait for part 3 of this series. See you next time!
