@@ -23,7 +23,8 @@ engines and, of course, the very healthy smog they produce. This is why the game
 in a given area. It has a bunch of latent effects on the people living there, but more importantly for today's example
 it has a _visual_ impact shown to the player.
 
-![Victoria 3 as seen here sans-smog on the Steam store page](https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2282100/ss_71a8276da2996d7ed5d68f31a560f231c5e5242f.1920x1080.jpg)
+![](https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2282100/ss_71a8276da2996d7ed5d68f31a560f231c5e5242f.1920x1080.jpg)
+*Victoria 3 as seen here sans-smog on the Steam store page*
 
 In the early days of Victoria 3 (I cannot remember if it was before or after the initial release), I ran across an issue where my FPS
 would just tank, even when the game was paused. This was my first clue as to where the problem was. If the framerate was
