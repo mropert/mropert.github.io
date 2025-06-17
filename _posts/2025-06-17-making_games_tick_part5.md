@@ -149,5 +149,5 @@ requires locking any data accessed by the `Recompute()` function. I find it gene
 all available threads to recompute instances of a cached value, by construction it should guarantee that the game objects accessed by the `Recompute`
 function will not change during the process (since all threads are busy with a task that only write to one thing).
 
-Speaking of threads, I think this is a good segway to the next big topic we should bring up: multithreading and concurrency in game ticks.
+Speaking of threads, I think this is a good segue to the next big topic we should bring up: multithreading and concurrency in game ticks.
 Expect several articles worth of content, see you next time!
