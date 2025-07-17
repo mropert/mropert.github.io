@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What makes a game tick? Part 2"
+title: "What makes a game tick? Part 2 - Basic Architecture"
 tags: [cpp, gamedev]
 description: > 
   Let's talk about game simulations. Today we ask ourselves basic architecture questions.

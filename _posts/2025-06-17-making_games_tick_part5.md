@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What makes a game tick? Part 5"
+title: "What makes a game tick? Part 5 - Rendering Script Performance"
 tags: [cpp, gamedev]
 description: > 
   Let's talk about game simulations. Today we look at some more real life script performance issues and discuss the two hard problems in computer science.

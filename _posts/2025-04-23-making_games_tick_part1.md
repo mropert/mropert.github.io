@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What makes a game tick? Part 1"
+title: "What makes a game tick? Part 1 - Introduction"
 tags: [cpp, gamedev]
 description: > 
   Let's talk about game simulations. And how to make them go fast.
