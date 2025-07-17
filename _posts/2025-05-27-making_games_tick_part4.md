@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What makes a game tick? Part 4"
+title: "What makes a game tick? Part 4 - Gameplay Script Performance"
 tags: [cpp, gamedev]
 description: > 
   Let's talk about game simulations. Today we look at some real life script performance issues I had to fix.

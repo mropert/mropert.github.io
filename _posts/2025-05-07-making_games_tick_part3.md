@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What makes a game tick? Part 3"
+title: "What makes a game tick? Part 3 - Scripted Ticks"
 tags: [cpp, gamedev]
 description: > 
   Let's talk about game simulations. In this episode we bring up scripting and the challenges it brings to architecture.
