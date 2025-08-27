@@ -40,7 +40,7 @@ Victoria 2 patch and/or during the development of Crusader Kings 2, in the very 
 first consumer dual core CPU, the Pentium D, only came out in 2005. And games usually don't use  the latest and most expensive
 product as their baseline. It's bad for sales when only a fraction of your playerbase can afford to run the game.
 
-As the 2010s rolled around, Grand Stategy Games were ticking by updating each collection of game objects in turn.
+As the 2010s rolled around, Grand Strategy Games were ticking by updating each collection of game objects in turn.
 Roughly speaking, a tick in a game like Europa Universalis IV or Hearts of Iron IV would look like this:
 
 ```cpp
