@@ -7,8 +7,13 @@ order: 99
 
 ## Talks
 
+(listed by year they were first given, revised/expanded editions will get their own entries)
+
+### 2025
+* _[Heaps Don't Lie: Guidelines for Memory Allocation in C++](https://www.youtube.com/watch?v=74WOvgGsyxs)_ (expanded for ACCU 2025 and CppNorth 2025)
+
 ### 2024
-* _[Heaps Don't Lie: Guidelines for Memory Allocation in C++](https://www.youtube.com/watch?v=QN3FhjSp7P8)_ (code::dive 2024 and ACCU 2025)
+* _[Heaps Don't Lie: Guidelines for Memory Allocation in C++](https://www.youtube.com/watch?v=QN3FhjSp7P8)_ (code::dive 2024)
 
 ### 2023
 * _[Multi Threading Model in Paradox Games: Past, Present and Future (updated version)](https://www.youtube.com/watch?v=M6rTceqNiNg)_ (ACCU 2023)
