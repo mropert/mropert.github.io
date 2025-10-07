@@ -111,7 +111,7 @@ in two or more bits, maybe we would end up with more parallelism opportunities.
 Let's split the country object in 3: economy, diplomacy and modifiers (the Paradox name for collection of various bonuses and debuffs that
 applies to an object) and rebuild the table:
 
-| Task | CountriesEconomy | CountriesDiplomacy | CountryModifiers | Provinces | Armies | Navies | AI |
+| Task | Economy | Diplomacy | Modifiers | Provinces | Armies | Navies | AI |
 |----------|----------|-----|-----|-----|-----|-----|-----|
 | UpdateCountries | 🖊️ | 🖊️ | 🖊️ | 📖 |  |  |  |  |  |
 | UpdateProvinces |  | 📖 |  | 🖊️ | 📖 |  |  |
@@ -122,7 +122,7 @@ applies to an object) and rebuild the table:
 Still not great, we still have lots of conflicts. But now we can consider splitting the other problem dimension by subdividing the tasks.
 Say we divide the country update into several parts:
 
-| Task | CountriesEconomy | CountriesDiplomacy | CountryModifiers | Provinces | Armies | Navies | AI |
+| Task | Economy | Diplomacy | Modifiers | Provinces | Armies | Navies | AI |
 |----------|----------|-----|-----|-----|-----|-----|-----|
 | UpdateModifiers |  |  | 🖊️ |  |  |  |  |  |  |
 | UpdateProvinces |  | 📖 |  | 🖊️ | 📖 |  |  |
