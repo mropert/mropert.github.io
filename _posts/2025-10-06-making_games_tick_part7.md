@@ -117,7 +117,7 @@ applies to an object) and rebuild the table:
 | UpdateProvinces |  | 📖 |  | 🖊️ | 📖 |  |  |
 | UpdateArmies |  | 📖 | 📖 | 📖 | 🖊️ |  |  |
 | UpdateNavies |  | 📖 | 📖 | 📖 |  | 🖊️ |  |
-| UpdateAI | 📖 | 📖 | 📖 | 📖 | 📖 | 📖 | 🖊️ |  |  |
+| UpdateAI | 📖 | 📖 | 📖 | 📖 | 📖 | 📖 | 🖊️ |
 
 Still not great, we still have lots of conflicts. But now we can consider splitting the other problem dimension by subdividing the tasks.
 Say we divide the country update into several parts:
@@ -130,7 +130,7 @@ Say we divide the country update into several parts:
 | UpdateDiplomacy |  | 🖊️ | 📖 | 📖 |  |  |  |  |  |
 | UpdateArmies |  | 📖 | 📖 | 📖 | 🖊️ |  |  |
 | UpdateNavies |  | 📖 | 📖 | 📖 |  | 🖊️ |  |
-| UpdateAI | 📖 | 📖 | 📖 | 📖 | 📖 | 📖 | 🖊️ |  |  |
+| UpdateAI | 📖 | 📖 | 📖 | 📖 | 📖 | 📖 | 🖊️ |
 
 Now we start to see some things emerge:
 * `UpdateModifiers` can run concurrent to `UpdateProvinces`
