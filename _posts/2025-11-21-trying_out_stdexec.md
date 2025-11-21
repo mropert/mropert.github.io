@@ -143,7 +143,8 @@ Model load_model( vk::Device device, TexManager& tex_manager )
                           [ & ]
                           {
                               return just()
-                                  | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } );
+                                  | bulk( stdexec::par_unseq, job.get_texture_count(),
+                                             [ & ]( int i ) { job.decompress_texture( i ); } );
                           } )
                       | then( [ & ] { job.upload_textures(); } ) )
         | then( [ & ] { job.finalize(); } ) );
@@ -179,7 +180,8 @@ let_value(
     {
         return just()
             | continues_on( scheduler ) // remind the executor where we are...
-            | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } );
+            | bulk( stdexec::par_unseq, job.get_texture_count(),
+                         [ & ]( int i ) { job.decompress_texture( i ); } );
     } )
 ```
 
@@ -202,7 +204,8 @@ Model load_model( vk::Device device, TexManager& tex_manager )
     job.parse();
     sync_wait( when_all( scheduler.schedule() | then( [ & ] { job.upload_vertices(); } ),
                          scheduler.schedule()
-                             | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } )
+                             | bulk( stdexec::par_unseq, job.get_texture_count(),
+                                         [ & ]( int i ) { job.decompress_texture( i ); } )
                              | then( [ & ] { job.upload_textures(); } ) )
                | then( [ & ] { job.finalize(); } ) );
 
