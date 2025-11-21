@@ -61,9 +61,9 @@ Pipeline create_pipeline( vk::Device device, vk::DescriptorSetLayout layout )
 {
     vk::raii::ShaderModule vertex_shader;
     vk::raii::ShaderModule fragment_shader;
-	tbb::parallel_invoke(
-		[ & ] { vertex_shader = compile_shader( device, "mesh.vs", VK_SHADER_STAGE_VERTEX_BIT ); },
-		[ & ] { fragment_shader = compile_shader( device, "mesh.fs", VK_SHADER_STAGE_FRAGMENT_BIT ); }
+    tbb::parallel_invoke(
+        [ & ] { vertex_shader = compile_shader( device, "mesh.vs", VK_SHADER_STAGE_VERTEX_BIT ); },
+        [ & ] { fragment_shader = compile_shader( device, "mesh.fs", VK_SHADER_STAGE_FRAGMENT_BIT ); }
     );
 
     /* ... */
@@ -83,15 +83,15 @@ void MeshLoadJob::decompress_textures()
 
 Model load_model( vk::Device device, TexManager& tex_manager )
 {
-	MeshLoadJob job( device, tex_manager, "model.glb" );
-	job.parse();
-	tbb::parallel_invoke( [ & ]() { job.upload_vertices(); },
-						  [ & ]
-						  {
-							  job.decompress_textures();
-							  job.upload_textures();
-						  } );
-	return job.finalize();
+    MeshLoadJob job( device, tex_manager, "model.glb" );
+    job.parse();
+    tbb::parallel_invoke( [ & ]() { job.upload_vertices(); },
+                          [ & ]
+                          {
+                              job.decompress_textures();
+                              job.upload_textures();
+                          } );
+    return job.finalize();
 }
 
 void main()
@@ -99,10 +99,10 @@ void main()
     /* Init Vulkan... */
 
     Pipeline pipeline;
-	Model model;
-	tbb::parallel_invoke(
-		[ & ] { pipeline = create_pipeline( device, layout );	},
-		[ & ] { model = load_model( device, tex_manager ); } );
+    Model model;
+    tbb::parallel_invoke(
+        [ & ] { pipeline = create_pipeline( device, layout );	},
+        [ & ] { model = load_model( device, tex_manager ); } );
 
     /* Draw loop... */
 }
@@ -132,21 +132,21 @@ Here's how it looks like:
 ```cpp
 Model load_model( vk::Device device, TexManager& tex_manager )
 {
-	MeshLoadJob job( device, tex_manager, "model.glb" );
+    MeshLoadJob job( device, tex_manager, "model.glb" );
 
-	using namespace stdexec;
-	auto parse_ask = split( scheduler.schedule() | then( [ & ] { job.parse(); } ) );
-	sync_wait(
-		when_all( parse_ask | then( [ & ] { job.upload_vertices(); } ),
-				  parse_ask
-					  | let_value(
-						  [ & ]
-						  {
-							  return just()
-								  | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } );
-						  } )
-					  | then( [ & ] { job.upload_textures(); } ) )
-		| then( [ & ] { job.finalize(); } ) );
+    using namespace stdexec;
+    auto parse_ask = split( scheduler.schedule() | then( [ & ] { job.parse(); } ) );
+    sync_wait(
+        when_all( parse_ask | then( [ & ] { job.upload_vertices(); } ),
+                  parse_ask
+                      | let_value(
+                          [ & ]
+                          {
+                              return just()
+                                  | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } );
+                          } )
+                      | then( [ & ] { job.upload_textures(); } ) )
+        | then( [ & ] { job.finalize(); } ) );
 
     return job.get_result();
 }
@@ -196,15 +196,15 @@ In the end I elected to simplify the code by first running the `parse()` part di
 ```cpp
 Model load_model( vk::Device device, TexManager& tex_manager )
 {
-	MeshLoadJob job( device, tex_manager, "model.glb" );
+    MeshLoadJob job( device, tex_manager, "model.glb" );
 
-	using namespace stdexec;
-	job.parse();
-	sync_wait( when_all( scheduler.schedule() | then( [ & ] { job.upload_vertices(); } ),
-						 scheduler.schedule()
-							 | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } )
-							 | then( [ & ] { job.upload_textures(); } ) )
-			   | then( [ & ] { job.finalize(); } ) );
+    using namespace stdexec;
+    job.parse();
+    sync_wait( when_all( scheduler.schedule() | then( [ & ] { job.upload_vertices(); } ),
+                         scheduler.schedule()
+                             | bulk( stdexec::par_unseq, job.get_texture_count(), [ & ]( int i ) { job.decompress_texture( i ); } )
+                             | then( [ & ] { job.upload_textures(); } ) )
+               | then( [ & ] { job.finalize(); } ) );
 
     return job.get_result();
 }
