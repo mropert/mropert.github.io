@@ -8,7 +8,7 @@ description: >
 author: mropert
 ---
 
-The code examples given in [part 1](/2025/11/11/enum_class_error_codes/) and [part 2](2025/11/17/enum_class_error_codes_part2/)
+The code examples given in [part 1](/2025/11/11/enum_class_error_codes/) and [part 2](/2025/11/17/enum_class_error_codes_part2/)
 strongly focused on simple (and I'd argue, quite common) form of error handling: run a sequence of operations, and if any
 of them fails bail out and report an error. We tried a few alternatives but they all came with caveats. Error code
 returns polluted a lot of the logic with `if ( error ) { return error; }`, `std::expected` was a bit more
@@ -133,7 +133,7 @@ placeholder and a screaming log message (if we're running a game test build).
 On the other hand we have unrecoverable issues like device failures, programming errors, and generally most of the
 errors Vulkan can return. For these all we want to do is invoke some form of custom crash reporting before terminating.
 It might be _theoretically_ possible to handle a `VK_ERROR_DEVICE_LOST` by shutting down the whole graphics context and recreating
-a new one, but I don't see any game trying to do rather that going back to desktop and let the player restart the game.
+a new one, but I don't see any game trying to do that rather than going back to desktop and let the player restart the game.
 
 ## Final thoughts on error handling
 
