@@ -100,7 +100,7 @@ implementation) rather than rely on something that the compiler can check and en
 catch all exceptions declared thrown by a called function, or declare the calling function as throwing them too).
 
 Why did we decide to go this way in C++? Frankly I'm not sure. The references I could find didn't have very convincing arguments. It
-was argued in [P0003](https://wg21.link/p3851) that "exceptions specifications are a failed experiment", but it's unclear to me whether
+was argued in [P0003](https://wg21.link/p0003) that "exceptions specifications are a failed experiment", but it's unclear to me whether
 it's just an observation that the poor original design lead us there, or because the author doesn't like the idea at all.
 The original sin seems to date back from 1995 where [N0741](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/1995/N0741.htm)
 favoured not adding any exception specification to the standard library because it would "constrain implementation" and
