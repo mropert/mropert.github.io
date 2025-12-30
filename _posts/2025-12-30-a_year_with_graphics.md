@@ -76,9 +76,8 @@ that the social media algorithm randomly threw at me.
 I put my own thin Vulkan abstraction out on [github](https://github.com/mropert/vk-renderer) although I don't
 think there's much interesting stuff going on in there for now. The only feature I'd say is possibly
 worth a look at is the [pipeline manager](https://github.com/mropert/vk-renderer/blob/main/src/renderer/pipeline_manager.cpp)
-that implements background shader recompilation if the source changes. And yes it doesn't take includes
-into account, that hasn't been a priority since for now I mostly use includes for data types that
-require a C++ side recompile to match anyway.
+that implements background shader recompilation if the source changes. If you're curious about multi-threaded
+asset loading in general, I made some experiment with various solutions [a month ago](/2025/11/21/trying_out_stdexec/).
 
 In general there's a lot of stuff missing or possibly inefficient, as I try to only add features as I need them.
 If decades of API development have taught me one thing, it's to never write something you don't have a client for.
