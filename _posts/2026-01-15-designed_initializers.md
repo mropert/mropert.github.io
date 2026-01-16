@@ -182,20 +182,20 @@ that we would have needed to repeat a lot of code only to say "keep those values
 But most importantly, this does not only apply to declaring variables on the stack. Now, we can finally do this:
 
 ```cpp
-auto depth_tex = device.create_texture( Texture::Desc { .format = Texture::Format::D32_SFLOAT,
-                                                        .usage = Texture::Usage::DEPTH_STENCIL_ATTACHMENT,
-                                                        .extent = draw_image_extent,
-                                                        .samples = 4 } );
+auto tex = device.create_texture( Texture::Desc { .format = Texture::Format::D32_SFLOAT,
+                                                  .usage = Texture::Usage::DEPTH_STENCIL_ATTACHMENT,
+                                                  .extent = draw_image_extent,
+                                                  .samples = 4 } );
 ```
 
 Or even this:
 
 ```cpp
 // The compiler will deduce what type we are initializing from the function declaration
-auto depth_tex = device.create_texture( { .format = Texture::Format::D32_SFLOAT,
-                                          .usage = Texture::Usage::DEPTH_STENCIL_ATTACHMENT,
-                                          .extent = draw_image_extent,
-                                          .samples = 4 } );
+auto tex = device.create_texture( { .format = Texture::Format::D32_SFLOAT,
+                                    .usage = Texture::Usage::DEPTH_STENCIL_ATTACHMENT,
+                                    .extent = draw_image_extent,
+                                    .samples = 4 } );
 ```
 
 Python programmers will look at this and exclaim "Look at what they need to mimic a fraction of our power!".
