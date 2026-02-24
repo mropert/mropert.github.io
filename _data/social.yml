@@ -202,3 +202,9 @@
   download:
     name: Download
     icon: icon-box-add
+  bluesky:
+    icon: icon-bluesky
+    prepend: "https://bsky.app/profile/"
+  mastodon:
+    icon: icon-mastodon
+    prepend: "https://mastodon.social/@"

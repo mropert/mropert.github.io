@@ -20,6 +20,12 @@
   {% endif %}
 {% endunless %}
 
+{% if platform == "mastodon" %}
+  {% assign rel = 'rel="me"' %}
+{% else %}
+  {% assign rel = '' %}
+{% endif %}
+
 {% if username contains "//" %}
   {% assign url = username %}
 {% else %}
@@ -27,7 +33,7 @@
 {% endif %}
 
 <li>
-  <a href="{{ url }}" title="{{ name }}">
+  <a href="{{ url }}" title="{{ name }}" {{ rel }}>
     <span class="{{ icon }}"></span>
     <span class="sr-only">{{ name }}</span>
   </a>

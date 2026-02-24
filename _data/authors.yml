@@ -39,6 +39,8 @@ mropert:
   social:
     # facebook:        <username>
     twitter:         MatRopert
+    bluesky:         MatRopert
+    mastodon:        MatRopert
     # google:          <number>
     # vk:              <username>
     # youtube:         <string_string_string>
