@@ -206,44 +206,44 @@ Here's the whole thing:
 class effects_manager
 {
 public:
-	void add( std::generator<std::monostate> effect )
-	{
-		_effects.push_back( std::move( effect ) );
-		_iterators.push_back( _effects.back().begin() );
-	}
+    void add( std::generator<std::monostate> effect )
+    {
+        _effects.push_back( std::move( effect ) );
+        _iterators.push_back( _effects.back().begin() );
+    }
 
-	void run()
-	{
-		// Remove the ones that are done (tweaked https://en.cppreference.com/w/cpp/algorithm/remove.html#Version_3)
-		int first = 0;
-		for ( ; first != _effects.size() && _iterators[ first ] != _effects[ first ].end(); ++first )
-			;
-		if ( first != _effects.size() )
-		{
-			for ( int i = first; ++i != _effects.size(); )
-			{
-				if ( _iterators[ i ] != _effects[ i ].end() )
-				{
-					_effects[ first ] = std::move( _effects[ i ] );
-					_iterators[ first ] = std::move( _iterators[ i ] );
-					++first;
-				}
-			}
-			_effects.erase( begin( _effects ) + first, end( _effects ) );
-			_iterators.erase( begin( _iterators ) + first, end( _iterators ) );
-		}
+    void run()
+    {
+        // Remove the ones that are done (tweaked https://en.cppreference.com/w/cpp/algorithm/remove.html#Version_3)
+        int first = 0;
+        for ( ; first != _effects.size() && _iterators[ first ] != _effects[ first ].end(); ++first )
+            ;
+        if ( first != _effects.size() )
+        {
+            for ( int i = first; ++i != _effects.size(); )
+            {
+                if ( _iterators[ i ] != _effects[ i ].end() )
+                {
+                    _effects[ first ] = std::move( _effects[ i ] );
+                    _iterators[ first ] = std::move( _iterators[ i ] );
+                    ++first;
+                }
+            }
+            _effects.erase( begin( _effects ) + first, end( _effects ) );
+            _iterators.erase( begin( _iterators ) + first, end( _iterators ) );
+        }
 
-		// Run the effects
-		for ( int i = 0; i < _effects.size(); ++i )
-		{
-			++_iterators[ i ];
-		}
-	}
+        // Run the effects
+        for ( int i = 0; i < _effects.size(); ++i )
+        {
+            ++_iterators[ i ];
+        }
+    }
 
 private:
-	std::vector<std::generator<std::monostate>> _effects;
-	using effect_iterator = decltype( std::declval<std::generator<std::monostate>>().begin() );
-	std::vector<effect_iterator> _iterators;
+    std::vector<std::generator<std::monostate>> _effects;
+    using effect_iterator = decltype( std::declval<std::generator<std::monostate>>().begin() );
+    std::vector<effect_iterator> _iterators;
 };
 ```
 
@@ -266,7 +266,6 @@ rather than relying on our coroutine invoking side effects. Instead of `monostat
 ```cpp
 std::generator<Draw> TimeWarp(const Model& model)
 {
-    
     // It's just a jump to the left
     vec3 position{ -1.f, 0.f, 0.f };
     co_yield Draw{ .model = model, .transform{ .position = position } };
@@ -295,21 +294,21 @@ std::generator<Draw> TimeWarp(const Model& model)
 Now we change our `run()` method to populate a vector of draws:
 
 ```cpp
-	std::vector<Draw> run()
-	{
-		// Remove the ones that are done ()
-        // ...
+std::vector<Draw> run()
+{
+    // Remove the ones that are done ()
+    // ...
 
-		// Run the effects
-        std::vector<Draw> draws;
-        draws.reserve( _effects.size() );
-		for ( int i = 0; i < _effects.size(); ++i )
-		{
-            draws.push_back( *_iterators[ i ] );
-			++_iterators[ i ];
-		}
-        return draws;
-	}
+    // Run the effects
+    std::vector<Draw> draws;
+    draws.reserve( _effects.size() );
+    for ( int i = 0; i < _effects.size(); ++i )
+    {
+        draws.push_back( *_iterators[ i ] );
+        ++_iterators[ i ];
+    }
+    return draws;
+}
 ```
 
 And while we're at it, we could even make our loop run in parallel now since we removed the side effects:
