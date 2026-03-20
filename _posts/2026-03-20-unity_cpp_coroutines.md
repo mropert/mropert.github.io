@@ -214,10 +214,12 @@ public:
 
     void run()
     {
-        // Remove the ones that are done (tweaked https://en.cppreference.com/w/cpp/algorithm/remove.html#Version_3)
+        // Remove the ones that are done
+        // (tweaked https://en.cppreference.com/w/cpp/algorithm/remove.html#Version_3)
         int first = 0;
-        for ( ; first != _effects.size() && _iterators[ first ] != _effects[ first ].end(); ++first )
-            ;
+        for ( ; first != _effects.size()
+                 && _iterators[ first ] != _effects[ first ].end(); ++first );
+
         if ( first != _effects.size() )
         {
             for ( int i = first; ++i != _effects.size(); )
