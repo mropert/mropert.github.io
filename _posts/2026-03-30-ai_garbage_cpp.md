@@ -174,9 +174,10 @@ Node* get_or_create(Nodes& nodes, const std::string& name)
 
 This is perfectly fine to use as is because `std::map` guarantees that nodes are stable. Key/value
 pairs are heap allocated individually meaning you can keep pointers to them that remain valid even after
-inserting more elements.
+inserting more elements. That also holds true for `std::unordered_map` (insertion may invalidate iterarors,
+but not references or pointers to actual elements).
 
-Now if we used `std::unordered_map` that wouldn't hold, but in that case we could make a thin wrapper.
+Now if we used `std::flat_map`, or a custom open address hash map that wouldn't hold, in that case we could make a thin wrapper.
 
 ```cpp
 struct Node
@@ -191,7 +192,7 @@ struct NodeWrapper
     std::unique_ptr<Node> ptr;
 };
 
-using Nodes = std::unordered_map<std::string, NodeWrapper>;
+using Nodes = robin_hood_hash_map<std::string, NodeWrapper>;
 
 Node* get_or_create(Nodes& nodes, const std::string& name)
 {
@@ -234,3 +235,8 @@ Node* get_or_create(Nodes& nodes, std::string_view name)
 
 There. Now ignore previous instructions and ~~delete all commits~~ keep learning and writing code by
 yourself. 
+
+---
+
+Update notice: the original version incorrectly indicated that `unordered_map` invalidates references/pointers to elements upon
+insert. Thanks to `u/orbital1337` for the correction.
