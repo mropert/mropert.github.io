@@ -225,7 +225,7 @@ using Nodes = std::map<std::string, Node, std::less<>>;
 Node* get_or_create(Nodes& nodes, std::string_view name)
 {
     auto it = nodes.lower_bound(name);
-    if (it == end(nodes))
+    if (it == end(nodes) || !(name < it->key))
     {
         it = nodes.emplace(name, name).first;
     }
@@ -240,3 +240,7 @@ yourself.
 
 Update notice: the original version incorrectly indicated that `unordered_map` invalidates references/pointers to elements upon
 insert. Thanks to `u/orbital1337` for the correction.
+
+Update notice #2: lower_bound() will return a valid iterator unless no value is greater or equal to key.
+The code should check if the keys are equivalent by checking if `!(name < it->key)` (set equivalence being defined
+as `!(a < b) && !(b < a)`). Thanks Nicolai Trandafil for the comment.
