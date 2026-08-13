@@ -119,7 +119,8 @@ public class CustomManager : MonoBehaviour
 {
     // Profiler marker are expensive to create, cache them in the class
     static readonly ProfilerMarker s_FooPerfMarker = new ProfilerMarker("Foo");
-    static readonly ProfilerMarker s_BarPerfMarker = new ProfilerMarker(ProfilerCategory.Ai, "Bar");
+    static readonly ProfilerMarker s_BarPerfMarker = new ProfilerMarker(ProfilerCategory.Ai,
+                                                                        "Bar");
 
     public void Update()
     {
