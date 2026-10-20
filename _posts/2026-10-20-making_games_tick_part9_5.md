@@ -8,7 +8,7 @@ description: >
 author: mropert
 ---
 
-After [part 9](2026/02/27/making_games_tick_part9/) we were done with the thread scheduling part
+After [part 9](/2026/02/27/making_games_tick_part9/) we were done with the thread scheduling part
 of our data-driven tick system and getting ready to move on to the data storage part of the problem.
 But in the interval I got to do some performance audits on mobile and ran into some interesting results
 that I feel I should share before we go on.
