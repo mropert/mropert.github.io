@@ -111,7 +111,7 @@ So if you find yourself needing any file metadata without needing to open the fi
 is the way to query metadata regardless how many fields you care about.
 
 But what if the file is already opened in a `std::filebuf` or a `std::istream`?
-Sadly there is no way to construct a `directory_entry` from those (or even a `FILE*`).
+Sadly there is no way to construct a `directory_entry` from those (or even from a `FILE*`).
 
 But for those willing to drop down to platform dependent APIs, since C++26 and [p1759](https://wg21.link/p1759)
 we can now get the OS handle to an open file through `.native_handle()`.
