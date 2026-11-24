@@ -129,7 +129,7 @@ I don't have a nicer way to put it: the implementation of `std::ifstream` on MSV
 `ifstream` is supposed to be a buffered file reader abstraction that protects the user from the physical reality of
 hard drives (both HDD and SSD). Block devices, as their name implies, perform reads and writes in blocks
 (usually 4K, up to 16K and more depending on controller). Reading anything smaller will result in wasted data
-that will need to read again later (from kernel disk cache if lucky, from the physical drive if not). To avoid
+that will need to be read again later (from kernel disk cache if lucky, from the physical drive if not). To avoid
 that, `ifstream` (much like `fread()`) keeps a read buffer attached to the file descriptor and only makes
 an actual `read()` filesystem call when the buffer runs out. This is critical for text parsers that read a few
 characters at a time.
